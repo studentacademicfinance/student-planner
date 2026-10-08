@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Planner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#6d778b;--line:#e7ebf2;--brand:#635bff;--brand2:#8b5cf6;--good:#16a34a;--warn:#f59e0b;--danger:#ef4444;--shadow:0 12px 35px rgba(28,38,64,.08)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+button,input,select{font:inherit}button{cursor:pointer;border:0}.hidden{display:none!important}
+.auth{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 10% 10%,#ddd9ff,transparent 35%),radial-gradient(circle at 90% 90%,#dff7ef,transparent 35%),#f7f8fc}
+.auth-card{width:min(100%,430px);background:#fff;border:1px solid var(--line);border-radius:28px;padding:34px;box-shadow:var(--shadow)}
+.logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:20px}.logo-mark{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;display:grid;place-items:center}
+.auth h1{font-size:30px;margin:28px 0 8px}.auth p{color:var(--muted);line-height:1.6}
+.field{margin:16px 0}.field label{display:block;font-size:13px;font-weight:600;margin-bottom:7px}.field input,.field select{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:12px;outline:none;background:#fff}.field input:focus,.field select:focus{border-color:var(--brand)}
+.primary{width:100%;padding:13px 16px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;font-weight:700}.switch{text-align:center;margin-top:18px;font-size:13px}.switch a{color:var(--brand);font-weight:700;cursor:pointer}
+.app{min-height:100vh}.topbar{height:70px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:10}.top-right{display:flex;align-items:center;gap:16px}.avatar{width:38px;height:38px;border-radius:50%;background:#ecebff;color:var(--brand);display:grid;place-items:center;font-weight:800}
+.layout{display:flex;min-height:calc(100vh - 70px)}.side{width:235px;background:#fff;border-right:1px solid var(--line);padding:22px 14px}.nav{display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:12px;color:var(--muted);margin-bottom:5px;font-weight:600}.nav.active,.nav:hover{background:#f0efff;color:var(--brand)}.main{flex:1;padding:28px;max-width:1500px;margin:auto;width:100%}
+.page-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.page-title h1{margin:0;font-size:28px}.page-title p{color:var(--muted);margin:6px 0 0}
+.grid{display:grid;gap:18px}.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.two{grid-template-columns:1.35fr 1fr}.three{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 5px 18px rgba(28,38,64,.035)}.stat-label{font-size:13px;color:var(--muted)}.stat-value{font-size:26px;font-weight:800;margin:8px 0}.green{color:var(--good)}.red{color:var(--danger)}.purple{color:var(--brand)}
+.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.card-head h3{margin:0;font-size:16px}.small-btn{padding:8px 11px;background:#f3f4f8;border-radius:9px;font-size:12px;font-weight:700}
+.progress{height:9px;background:#edf0f5;border-radius:99px;overflow:hidden}.progress>span{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px}
+.list{display:flex;flex-direction:column;gap:10px}.row{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid #f0f1f5}.row:last-child{border-bottom:0}.sub{font-size:12px;color:var(--muted);margin-top:3px}.pill{display:inline-flex;padding:5px 8px;border-radius:999px;background:#f2f3f7;font-size:11px;font-weight:700}.pill.high{background:#fee2e2;color:#b91c1c}.pill.medium{background:#fef3c7;color:#92400e}.pill.low{background:#dcfce7;color:#166534}
+.bar-wrap{display:flex;align-items:end;gap:10px;height:180px;padding-top:10px}.bar-col{flex:1;text-align:center;height:100%;display:flex;flex-direction:column;justify-content:end;gap:7px}.bar{background:linear-gradient(180deg,#8b5cf6,#635bff);border-radius:7px 7px 3px 3px;min-height:5px}.bar-col span{font-size:10px;color:var(--muted)}
+.section{display:none}.section.active{display:block}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap}.toolbar input,.toolbar select{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}.action{padding:10px 14px;border-radius:10px;background:var(--brand);color:#fff;font-weight:700}
+.table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:13px;border-bottom:1px solid var(--line);font-size:13px}.table th{color:var(--muted);font-weight:600}
+.calendar-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}.cal-cell{min-height:105px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:8px;background:#fff}.cal-cell.muted{background:#fafafa;color:#b4bac5}.date-num{font-size:12px;font-weight:700}.event{font-size:10px;padding:4px 5px;border-radius:6px;background:#eeedff;color:#554de6;margin-top:6px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.modal{position:fixed;inset:0;background:rgba(20,25,40,.45);display:grid;place-items:center;padding:20px;z-index:50}.modal-box{width:min(100%,500px);background:#fff;border-radius:20px;padding:24px}.modal-head{display:flex;justify-content:space-between;align-items:center}.close{background:#f2f3f7;border-radius:9px;padding:7px 10px}.form-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}.secondary{padding:11px 15px;background:#f1f2f6;border-radius:10px;font-weight:700}
+.toast{position:fixed;right:20px;bottom:20px;background:#172033;color:#fff;padding:13px 16px;border-radius:12px;box-shadow:var(--shadow);z-index:100;font-size:13px}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+@media(max-width:950px){.stats{grid-template-columns:repeat(2,1fr)}.two,.three{grid-template-columns:1fr}.side{width:75px}.side .nav span{display:none}.side .logo{justify-content:center}.side .logo div:last-child{display:none}}
+@media(max-width:650px){.topbar{padding:0 15px}.main{padding:18px 14px}.stats{grid-template-columns:1fr 1fr}.cal-cell{min-height:78px}.cal-grid{font-size:10px}.card{padding:16px}.page-title{align-items:flex-start;gap:12px}.page-title h1{font-size:23px}}
+</style>
+</head>
+<body>
+<div id="auth" class="auth">
+  <div class="auth-card">
+    <div class="logo"><div class="logo-mark">SP</div><div>Student Planner</div></div>
+    <div id="loginBox">
+      <h1>Welcome back</h1><p>Plan your academics and manage your student finances in one place.</p>
+      <div class="field"><label>Email</label><input id="loginEmail" type="email" placeholder="student@email.com"></div>
+      <div class="field"><label>Password</label><input id="loginPass" type="password" placeholder="••••••••"></div>
+      <button class="primary" onclick="login()">Sign in</button>
+      <div class="switch">New student? <a onclick="showRegister()">Create an account</a></div>
+    </div>
+    <div id="registerBox" class="hidden">
+      <h1>Create account</h1><p>Set up your personal student planner.</p>
+      <div class="field"><label>Full name</label><input id="regName" placeholder="Juan Dela Cruz"></div>
+      <div class="field"><label>Email</label><input id="regEmail" type="email" placeholder="student@email.com"></div>
+      <div class="field"><label>Password</label><input id="regPass" type="password" placeholder="At least 4 characters"></div>
+      <button class="primary" onclick="register()">Create account</button>
+      <div class="switch">Already registered? <a onclick="showLogin()">Sign in</a></div>
+    </div>
+  </div>
+</div>
+
+<div id="app" class="app hidden">
+<header class="topbar">
+  <div class="logo"><div class="logo-mark">SP</div><div>Student Planner</div></div>
+  <div class="top-right"><span id="todayText" class="sub"></span><div id="avatar" class="avatar">S</div><button class="small-btn" onclick="logout()">Logout</button></div>
+</header>
+<div class="layout">
+<aside class="side">
+  <div class="nav active" data-section="dashboard" onclick="go('dashboard')">◉ <span>Dashboard</span></div>
+  <div class="nav" data-section="expenses" onclick="go('expenses')">₱ <span>Expenses</span></div>
+  <div class="nav" data-section="tasks" onclick="go('tasks')">✓ <span>Academic Tasks</span></div>
+  <div class="nav" data-section="calendar" onclick="go('calendar')">▦ <span>Calendar</span></div>
+  <div class="nav" data-section="budget" onclick="go('budget')">◎ <span>Budget & Savings</span></div>
+</aside>
+<main class="main">
+<section id="dashboard" class="section active">
+<div class="page-title"><div><h1 id="hello">Good morning</h1><p>Here's your academic and financial overview.</p></div><button class="action" onclick="openModal('expense')">+ Add Expense</button></div>
+<div class="grid stats">
+<div class="card"><div class="stat-label">Monthly Budget</div><div id="sBudget" class="stat-value">₱0</div><div class="sub">Your planned spending limit</div></div>
+<div class="card"><div class="stat-label">Total Spent</div><div id="sSpent" class="stat-value red">₱0</div><div class="sub">Expenses this month</div></div>
+<div class="card"><div class="stat-label">Remaining</div><div id="sRemain" class="stat-value green">₱0</div><div class="sub">Available budget</div></div>
+<div class="card"><div class="stat-label">Upcoming Tasks</div><div id="sTasks" class="stat-value purple">0</div><div class="sub">Incomplete academic tasks</div></div>
+</div>
+<div class="grid two" style="margin-top:18px">
+<div class="card"><div class="card-head"><h3>Spending overview</h3><button class="small-btn" onclick="go('expenses')">View all</button></div><div id="bars" class="bar-wrap"></div></div>
+<div class="card"><div class="card-head"><h3>Savings goal</h3><span id="savePct" class="pill">0%</span></div><div class="stat-value" id="saveAmount">₱0 / ₱0</div><div class="progress"><span id="saveBar" style="width:0%"></span></div><p class="sub" id="saveText">Set a savings goal to start tracking.</p><button class="action" style="margin-top:14px" onclick="openModal('budget')">Manage budget</button></div>
+</div>
+<div class="grid two" style="margin-top:18px">
+<div class="card"><div class="card-head"><h3>Upcoming academic tasks</h3><button class="small-btn" onclick="go('tasks')">Manage</button></div><div id="dashTasks" class="list"></div></div>
+<div class="card"><div class="card-head"><h3>Recent expenses</h3><button class="small-btn" onclick="go('expenses')">Manage</button></div><div id="dashExpenses" class="list"></div></div>
+</div>
+</section>
+
+<section id="expenses" class="section">
+<div class="page-title"><div><h1>Expenses</h1><p>Record and monitor your daily spending.</p></div><button class="action" onclick="openModal('expense')">+ Add Expense</button></div>
+<div class="card"><div class="toolbar"><input id="expenseSearch" oninput="renderExpenses()" placeholder="Search expenses..."><select id="expenseFilter" onchange="renderExpenses()"><option value="">All categories</option><option>Food</option><option>Transportation</option><option>School</option><option>Personal</option><option>Others</option></select></div><div id="expenseTable" style="overflow:auto;margin-top:16px"></div></div>
+</section>
+
+<section id="tasks" class="section">
+<div class="page-title"><div><h1>Academic Tasks</h1><p>Keep assignments, deadlines, and school requirements organized.</p></div><button class="action" onclick="openModal('task')">+ Add Task</button></div>
+<div class="card"><div id="taskList"></div></div>
+</section>
+
+<section id="calendar" class="section">
+<div class="page-title"><div><h1>Academic Calendar</h1><p>Visualize your deadlines and school schedule.</p></div><button class="action" onclick="openModal('task')">+ Add Task</button></div>
+<div class="card"><div class="calendar-head"><button class="small-btn" onclick="changeMonth(-1)">←</button><h3 id="monthTitle"></h3><button class="small-btn" onclick="changeMonth(1)">→</button></div><div class="cal-grid" id="calendarGrid"></div></div>
+</section>
+
+<section id="budget" class="section">
+<div class="page-title"><div><h1>Budget & Savings</h1><p>Set your monthly spending limit and savings target.</p></div><button class="action" onclick="openModal('budget')">Edit budget</button></div>
+<div class="grid three">
+<div class="card"><div class="stat-label">Monthly budget</div><div class="stat-value" id="bBudget">₱0</div></div>
+<div class="card"><div class="stat-label">Spent</div><div class="stat-value red" id="bSpent">₱0</div></div>
+<div class="card"><div class="stat-label">Remaining</div><div class="stat-value green" id="bRemain">₱0</div></div>
+</div>
+<div class="grid two" style="margin-top:18px"><div class="card"><div class="card-head"><h3>Budget utilization</h3><span id="budgetPct" class="pill">0%</span></div><div class="progress"><span id="budgetBar" style="width:0%"></span></div><p id="budgetHint" class="sub"></p></div><div class="card"><div class="card-head"><h3>Savings goal</h3></div><div id="budgetSaving" class="stat-value">₱0 / ₱0</div><div class="progress"><span id="budgetSaveBar" style="width:0%"></span></div></div></div>
+</section>
+</main></div></div>
+
+<div id="modal" class="modal hidden" onclick="if(event.target===this)closeModal()"><div class="modal-box">
+<div class="modal-head"><h2 id="modalTitle" style="margin:0">Add</h2><button class="close" onclick="closeModal()">✕</button></div>
+<div id="expenseForm">
+<div class="field"><label>Amount</label><input id="eAmount" type="number" min="0" step=".01" placeholder="0.00"></div>
+<div class="field"><label>Category</label><select id="eCat"><option>Food</option><option>Transportation</option><option>School</option><option>Personal</option><option>Others</option></select></div>
+<div class="field"><label>Description</label><input id="eDesc" placeholder="e.g. Lunch"></div>
+<div class="field"><label>Date</label><input id="eDate" type="date"></div>
+</div>
+<div id="taskForm" class="hidden">
+<div class="field"><label>Task title</label><input id="tTitle" placeholder="e.g. Research paper"></div>
+<div class="field"><label>Subject</label><input id="tSubject" placeholder="e.g. Capstone"></div>
+<div class="field"><label>Due date</label><input id="tDate" type="date"></div>
+<div class="field"><label>Priority</label><select id="tPriority"><option>High</option><option selected>Medium</option><option>Low</option></select></div>
+</div>
+<div id="budgetForm" class="hidden">
+<div class="field"><label>Monthly budget</label><input id="mBudget" type="number" min="0" placeholder="1500"></div>
+<div class="field"><label>Savings goal</label><input id="mGoal" type="number" min="0" placeholder="5000"></div>
+<div class="field"><label>Current savings</label><input id="mSaved" type="number" min="0" placeholder="0"></div>
+<div class="field"><label>Target date</label><input id="mTargetDate" type="date"></div>
+</div>
+<div class="form-actions"><button class="secondary" onclick="closeModal()">Cancel</button><button class="action" onclick="saveModal()">Save</button></div>
+</div></div>
+<div id="toast" class="toast hidden"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* STEP 5: Supabase connection.
+   Replace ONLY the two placeholder values below with your Project URL and Publishable key.
+   Never put a Secret/service_role key here. */
+const SUPABASE_URL = 'https://tgkqotwlewxctmfohpcp.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_Ksj5pOesSPMcNuisTw9RoQ_4cUEZ7Mz';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+let currentUser = null;
+let profile = null;
+let cache = {budget:null, goal:null, saved:null, targetDate:null, expenses:[], tasks:[]};let viewDate = new Date();
+const money=n=>'₱'+Number(n||0).toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2});
+const todayISO=()=>new Date().toISOString().slice(0,10);
+function toast(m){let t=document.getElementById('toast');t.textContent=m;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),2200)}
+function showRegister(){loginBox.classList.add('hidden');registerBox.classList.remove('hidden')}
+function showLogin(){registerBox.classList.add('hidden');loginBox.classList.remove('hidden')}
+function monthStart(){const d=new Date(); return new Date(d.getFullYear(),d.getMonth(),1).toISOString().slice(0,10)}
+function monthKey(){return monthStart()}
+
+async function register(){
+  const name=regName.value.trim(), email=regEmail.value.trim().toLowerCase(), pass=regPass.value;
+  if(!name||!email||pass.length<6)return toast('Please use a name, email, and password of at least 6 characters.');
+  const {data,error}=await sb.auth.signUp({email,password:pass,options:{data:{full_name:name}}});
+  if(error)return toast(error.message);
+  if(data.user){
+    const {error:pe}=await sb.from('profiles').upsert({id:data.user.id,full_name:name});
+    if(pe) console.warn('Profile save:',pe.message);
+  }
+  if(!data.session){toast('Account created. Check your email to confirm, then sign in.');showLogin();return;}
+  await startApp(data.session.user);
+}
+async function login(){
+  const email=loginEmail.value.trim().toLowerCase(),pass=loginPass.value;
+  if(!email||!pass)return toast('Enter your email and password.');
+  const {data,error}=await sb.auth.signInWithPassword({email,password:pass});
+  if(error)return toast(error.message);
+  await startApp(data.user);
+}
+async function logout(){await sb.auth.signOut();currentUser=null;auth.classList.remove('hidden');app.classList.add('hidden');showLogin()}
+async function startApp(user){
+  currentUser=user;
+  let {data:p}=await sb.from('profiles').select('full_name').eq('id',user.id).maybeSingle();
+  profile=p||{full_name:user.user_metadata?.full_name||user.email?.split('@')[0]||'Student'};
+  if(!p){await sb.from('profiles').upsert({id:user.id,full_name:profile.full_name})}
+  avatar.textContent=(profile.full_name||'S')[0].toUpperCase();
+  const h=new Date().getHours(); hello.textContent='Good '+(h<12?'morning':h<18?'afternoon':'evening')+', '+(profile.full_name||'Student').split(' ')[0];
+  todayText.textContent=new Date().toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'});
+  auth.classList.add('hidden');app.classList.remove('hidden');
+  await loadAll();
+}
+async function loadAll(){
+  const uid=currentUser.id;
+  const [b,g,e,t]=await Promise.all([
+    sb.from('budgets').select('*').eq('user_id',uid).eq('month',monthKey()).maybeSingle(),
+    sb.from('savings_goals').select('*').eq('user_id',uid).maybeSingle(),
+    sb.from('expenses').select('*').eq('user_id',uid).order('expense_date',{ascending:false}),
+    sb.from('academic_tasks').select('*').eq('user_id',uid).order('due_date',{ascending:true})
+  ]);
+  if(b.error) console.warn('budgets:',b.error.message);
+  if(g.error) console.warn('savings_goals:',g.error.message);
+  if(e.error) console.warn('expenses:',e.error.message);
+  if(t.error) console.warn('academic_tasks:',t.error.message);
+  cache.budget=b.data?.amount??0;
+cache.goal=g.data?.target_amount??0;
+cache.saved=g.data?.current_amount??0;
+cache.targetDate=g.data?.["target date"]??null;
+  cache.expenses=(e.data||[]).map(x=>({id:x.id,amount:Number(x.amount||0),cat:x.category,desc:x.description||x.category,date:x.expense_date}));
+  cache.tasks=(t.data||[]).map(x=>({id:x.id,title:x.title,subject:x.subject||'General',date:x.due_date,priority:x.priority||'Medium',done:!!x.completed}));
+  renderAll();
+}
+function go(id){document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.section===id));renderAll()}
+function monthExpenses(){const m=monthKey();return cache.expenses.filter(e=>String(e.date).startsWith(m))}
+function renderAll(){renderDashboard();renderExpenses();renderTasks();renderCalendar();renderBudget()}
+function renderDashboard(){
+  const ex=monthExpenses(),spent=ex.reduce((a,e)=>a+e.amount,0),remain=Number(cache.budget||0)-spent;
+sBudget.textContent=money(cache.budget);sSpent.textContent=money(spent);sRemain.textContent=money(remain);sRemain.className='stat-value '+(remain<0?'red':'green');sTasks.textContent=cache.tasks.filter(t=>!t.done).length;
+
+const savingsPercent = cache.goal ? Math.min(100, Math.round((cache.saved / cache.goal) * 100)) : 0;
+savePct.textContent = savingsPercent + '%';
+saveAmount.textContent = money(cache.saved) + ' / ' + money(cache.goal);
+saveBar.style.width = savingsPercent + '%';
+
+saveText.textContent=cache.goal
+  ? `Target: ${cache.targetDate ? new Date(cache.targetDate+'T00:00:00').toLocaleDateString('en-PH',{month:'long',day:'numeric',year:'numeric'}) : 'No target date set'}`
+  : 'Set a savings goal to start tracking.';let tasks=[...cache.tasks].filter(t=>!t.done).sort((a,b)=>String(a.date).localeCompare(String(b.date))).slice(0,4);dashTasks.innerHTML=tasks.length?tasks.map(t=>`<div class="row"><div><b>${esc(t.title)}</b><div class="sub">${esc(t.subject)} · ${t.date}</div></div><span class="pill ${String(t.priority).toLowerCase()}">${esc(t.priority)}</span></div>`).join(''):'<div class="empty">No upcoming tasks.</div>';
+  let recent=[...cache.expenses].sort((a,b)=>String(b.date).localeCompare(String(a.date))).slice(0,4);dashExpenses.innerHTML=recent.length?recent.map(e=>`<div class="row"><div><b>${esc(e.desc||e.cat)}</b><div class="sub">${esc(e.cat)} · ${e.date}</div></div><b class="red">-${money(e.amount)}</b></div>`).join(''):'<div class="empty">No expenses yet.</div>';
+}
+function renderExpenses(){let q=(expenseSearch?.value||'').toLowerCase(),f=expenseFilter?.value||'',arr=cache.expenses.filter(e=>(!q||String(e.desc).toLowerCase().includes(q)||String(e.cat).toLowerCase().includes(q))&&(!f||e.cat===f));expenseTable.innerHTML=arr.length?`<table class="table"><thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Amount</th><th></th></tr></thead><tbody>${arr.map(e=>`<tr><td>${e.date}</td><td>${esc(e.desc)}</td><td><span class="pill">${esc(e.cat)}</span></td><td class="red"><b>${money(e.amount)}</b></td><td><button class="small-btn" onclick="delExpense('${e.id}')">Delete</button></td></tr>`).join('')}</tbody></table>`:'<div class="empty">No matching expenses.</div>'}
+async function delExpense(id){const {error}=await sb.from('expenses').delete().eq('id',id).eq('user_id',currentUser.id);if(error)return toast(error.message);await loadAll();toast('Expense deleted.')}
+function renderTasks(){let arr=[...cache.tasks].sort((a,b)=>Number(a.done)-Number(b.done)||String(a.date).localeCompare(String(b.date)));taskList.innerHTML=arr.length?`<table class="table"><thead><tr><th>Status</th><th>Task</th><th>Subject</th><th>Due</th><th>Priority</th><th></th></tr></thead><tbody>${arr.map(t=>`<tr><td><input type="checkbox" ${t.done?'checked':''} onchange="toggleTask('${t.id}',${!t.done})"></td><td><b class="${t.done?'sub':''}">${esc(t.title)}</b></td><td>${esc(t.subject)}</td><td>${t.date}</td><td><span class="pill ${String(t.priority).toLowerCase()}">${esc(t.priority)}</span></td><td><button class="small-btn" onclick="delTask('${t.id}')">Delete</button></td></tr>`).join('')}</tbody></table>`:'<div class="empty">No academic tasks yet.</div>'}
+async function toggleTask(id,completed){const {error}=await sb.from('academic_tasks').update({completed}).eq('id',id).eq('user_id',currentUser.id);if(error)return toast(error.message);await loadAll();toast(completed?'Task completed!':'Task reopened.')}
+async function delTask(id){const {error}=await sb.from('academic_tasks').delete().eq('id',id).eq('user_id',currentUser.id);if(error)return toast(error.message);await loadAll();toast('Task deleted.')}
+function renderCalendar(){let y=viewDate.getFullYear(),m=viewDate.getMonth(),first=new Date(y,m,1),last=new Date(y,m+1,0),start=first.getDay(),total=last.getDate(),prev=new Date(y,m,0).getDate();monthTitle.textContent=first.toLocaleDateString('en-US',{month:'long',year:'numeric'});let cells='';for(let i=0;i<42;i++){let n=i-start+1,day=n,muted=false,iso;if(n<1){day=prev+n;muted=true;iso=new Date(y,m-1,day).toISOString().slice(0,10)}else if(n>total){day=n-total;muted=true;iso=new Date(y,m+1,day).toISOString().slice(0,10)}else{iso=new Date(y,m,day).toISOString().slice(0,10)}let events=cache.tasks.filter(t=>t.date===iso);cells+=`<div class="cal-cell ${muted?'muted':''}"><div class="date-num">${day}</div>${events.map(e=>`<div class="event" title="${esc(e.title)}">${esc(e.title)}</div>`).join('')}</div>`}calendarGrid.innerHTML=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(x=>`<div style="padding:8px;background:#f8f9fc;border-right:1px solid var(--line);font-size:11px;font-weight:700;color:var(--muted)">${x}</div>`).join('')+cells}
+function changeMonth(n){viewDate.setMonth(viewDate.getMonth()+n);renderCalendar()}
+function renderBudget(){let spent=monthExpenses().reduce((a,e)=>a+e.amount,0),p=cache.budget?Math.min(100,spent/cache.budget*100):0;bBudget.textContent=money(cache.budget);bSpent.textContent=money(spent);bRemain.textContent=money(Number(cache.budget||0)-spent);budgetPct.textContent=Math.round(p)+'%';budgetBar.style.width=p+'%';budgetHint.textContent=p>=100?'You have reached your budget limit.':`${Math.round(p)}% of your monthly budget has been used.`;budgetSaving.textContent=`${money(cache.saved)} / ${money(cache.goal)}`;budgetSaveBar.style.width=(cache.goal?Math.min(100,cache.saved/cache.goal*100):0)+'%'}
+function openModal(type){modal.classList.remove('hidden');expenseForm.classList.toggle('hidden',type!=='expense');taskForm.classList.toggle('hidden',type!=='task');budgetForm.classList.toggle('hidden',type!=='budget');modalTitle.textContent=type==='expense'?'Add Expense':type==='task'?'Add Academic Task':'Budget & Savings';eDate.value=todayISO();tDate.value=todayISO();if(type==='budget'){
+  mBudget.value=cache.budget||0;
+  mGoal.value=cache.goal||0;
+  mSaved.value=cache.saved||0;
+  mTargetDate.value=cache.targetDate||'';
+}}
+
+function closeModal(){modal.classList.add('hidden')}
+async function saveModal(){
+  if(!currentUser)return;
+  if(!expenseForm.classList.contains('hidden')){
+    let amount=Number(eAmount.value),desc=eDesc.value.trim();if(!amount||amount<0)return toast('Enter a valid amount.');
+    const {error}=await sb.from('expenses').insert({user_id:currentUser.id,amount,category:eCat.value,description:desc||eCat.value,expense_date:eDate.value||todayISO()});if(error)return toast(error.message);toast('Expense saved.');
+  } else if(!taskForm.classList.contains('hidden')){
+    if(!tTitle.value.trim()||!tDate.value)return toast('Enter a title and due date.');
+    const {error}=await sb.from('academic_tasks').insert({user_id:currentUser.id,title:tTitle.value.trim(),subject:tSubject.value.trim()||'General',due_date:tDate.value,priority:tPriority.value,completed:false});if(error)return toast(error.message);toast('Academic task added.');
+  } else {
+    const {error:bErr}=await sb.from('budgets').upsert({user_id:currentUser.id,month:monthKey(),amount:Number(mBudget.value)||0},{onConflict:'user_id,month'});if(bErr)return toast(bErr.message);
+    const {data:existing}=await sb.from('savings_goals').select('id').eq('user_id',currentUser.id).maybeSingle();
+let sErr;
+if(existing?.id)
+sErr=(await sb.from('savings_goals').update({
+  target_amount:Number(mGoal.value)||0,
+  current_amount:Number(mSaved.value)||0,
+  "target date":mTargetDate.value||null
+}).eq('id',existing.id).eq('user_id',currentUser.id)).error;
+else
+  sErr=(await sb.from('savings_goals').insert({
+  user_id:currentUser.id,
+  name:'Savings Goal',
+  target_amount:Number(mGoal.value)||0,
+  current_amount:Number(mSaved.value)||0,
+  "target date":mTargetDate.value||null
+})).error;
+if(sErr)return toast(sErr.message);
+toast('Budget updated.');  }
+  closeModal();await loadAll();
+}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+
+(async()=>{const {data}=await sb.auth.getSession();if(data.session)await startApp(data.session.user);sb.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_OUT'){currentUser=null;auth.classList.remove('hidden');app.classList.add('hidden')}})})()
+</script>
+</body>
+</html>
