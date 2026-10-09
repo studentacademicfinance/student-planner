@@ -1,5 +1,6 @@
 
-{"id": "/student-planner/"
+{
+  "id": "/student-planner/",
   "name": "Student Planner",
   "short_name": "Planner",
   "description": "Manage academic tasks, deadlines, expenses, and savings.",
