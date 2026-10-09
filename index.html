@@ -371,5 +371,21 @@ function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&l
 
 (async()=>{const {data}=await sb.auth.getSession();if(data.session)await startApp(data.session.user);sb.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_OUT'){currentUser=null;auth.classList.remove('hidden');app.classList.add('hidden')}})})()
 </script>
+	
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", async () => {
+    try {
+      await navigator.serviceWorker.register(
+        "/student-planner/sw.js",
+        { scope: "/student-planner/" }
+      );
+      console.log("Student Planner service worker registered.");
+    } catch (error) {
+      console.error("Service worker registration failed:", error);
+    }
+  });
+}
+</script>
 </body>
 </html>
