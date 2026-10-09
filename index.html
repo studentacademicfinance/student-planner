@@ -25,7 +25,24 @@ button,input,select{font:inherit}button{cursor:pointer;border:0}.hidden{display:
 .card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.card-head h3{margin:0;font-size:16px}.small-btn{padding:8px 11px;background:#f3f4f8;border-radius:9px;font-size:12px;font-weight:700}
 .progress{height:9px;background:#edf0f5;border-radius:99px;overflow:hidden}.progress>span{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:99px}
 .list{display:flex;flex-direction:column;gap:10px}.row{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid #f0f1f5}.row:last-child{border-bottom:0}.sub{font-size:12px;color:var(--muted);margin-top:3px}.pill{display:inline-flex;padding:5px 8px;border-radius:999px;background:#f2f3f7;font-size:11px;font-weight:700}.pill.high{background:#fee2e2;color:#b91c1c}.pill.medium{background:#fef3c7;color:#92400e}.pill.low{background:#dcfce7;color:#166534}
-.bar-wrap{display:flex;align-items:end;gap:10px;height:180px;padding-top:10px}.bar-col{flex:1;text-align:center;height:100%;display:flex;flex-direction:column;justify-content:end;gap:7px}.bar{background:linear-gradient(180deg,#8b5cf6,#635bff);border-radius:7px 7px 3px 3px;min-height:5px}.bar-col span{font-size:10px;color:var(--muted)}
+
+.bar-wrap{display:flex;align-items:end;gap:10px;height:200px;padding-top:10px;overflow-x:auto}
+.bar-col{flex:1;min-width:0;text-align:center;height:100%;display:flex;flex-direction:column;justify-content:end;gap:5px}
+.bar{
+  width:100%;
+  max-width:40px;
+  align-self:center;
+  border-radius:7px 7px 3px 3px;
+  min-height:4px;
+  transition:height .25s ease,filter .2s ease;
+  box-shadow:0 4px 10px rgba(30,40,70,.12);
+}
+.bar:hover{
+  filter:brightness(1.12);
+}
+.bar-col span{font-size:10px;color:var(--muted)}
+.bar-amount{font-size:10px;font-weight:700;white-space:nowrap}
+.bar-count{font-size:9px;color:var(--muted);white-space:nowrap}
 .section{display:none}.section.active{display:block}
 .toolbar{display:flex;gap:10px;flex-wrap:wrap}.toolbar input,.toolbar select{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}.action{padding:10px 14px;border-radius:10px;background:var(--brand);color:#fff;font-weight:700}
 .table{width:100%;border-collapse:collapse}.table th,.table td{text-align:left;padding:13px;border-bottom:1px solid var(--line);font-size:13px}.table th{color:var(--muted);font-weight:600}
@@ -158,8 +175,12 @@ const todayISO=()=>new Date().toISOString().slice(0,10);
 function toast(m){let t=document.getElementById('toast');t.textContent=m;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),2200)}
 function showRegister(){loginBox.classList.add('hidden');registerBox.classList.remove('hidden')}
 function showLogin(){registerBox.classList.add('hidden');loginBox.classList.remove('hidden')}
-function monthStart(){const d=new Date(); return new Date(d.getFullYear(),d.getMonth(),1).toISOString().slice(0,10)}
-function monthKey(){return monthStart()}
+function monthStart(){
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  return `${year}-${month}-01`;
+}function monthKey(){return monthStart()}
 
 async function register(){
   const name=regName.value.trim(), email=regEmail.value.trim().toLowerCase(), pass=regPass.value;
@@ -213,9 +234,77 @@ cache.targetDate=g.data?.["target date"]??null;
   renderAll();
 }
 function go(id){document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.section===id));renderAll()}
-function monthExpenses(){const m=monthKey();return cache.expenses.filter(e=>String(e.date).startsWith(m))}
+
+function monthExpenses(){
+  const m = monthKey().slice(0, 7);
+  return cache.expenses.filter(e =>
+    String(e.date || '').startsWith(m)
+  );
+}
+
 function renderAll(){renderDashboard();renderExpenses();renderTasks();renderCalendar();renderBudget()}
+
+
+function renderSpendingChart(){
+  const container = document.getElementById('bars');
+
+  const categories = [
+    {name:'Food', color:'#F97316', light:'#FDBA74'},
+    {name:'Transportation', color:'#0EA5E9', light:'#7DD3FC'},
+    {name:'School', color:'#8B5CF6', light:'#C4B5FD'},
+    {name:'Personal', color:'#EC4899', light:'#F9A8D4'},
+    {name:'Others', color:'#10B981', light:'#6EE7B7'}
+  ];
+
+  const expenses = monthExpenses();
+
+  if(!expenses.length){
+    container.innerHTML =
+      '<div class="empty">No expenses this month yet.</div>';
+    return;
+  }
+
+  const totals = categories.map(category => {
+    const matching = expenses.filter(e => e.cat === category.name);
+
+    return {
+      ...category,
+      total: matching.reduce(
+        (sum, e) => sum + Number(e.amount || 0), 0
+      ),
+      count: matching.length
+    };
+  });
+
+  const maxTotal = Math.max(...totals.map(x => x.total), 1);
+
+  container.innerHTML = totals.map(item => {
+    const height = item.total > 0
+      ? Math.max(8, (item.total / maxTotal) * 95)
+      : 4;
+
+    return `
+      <div class="bar-col"
+           title="${esc(item.name)}: ${money(item.total)}">
+        <div class="bar-amount">${money(item.total)}</div>
+        <div class="bar"
+             style="height:${height}px;
+                    background:linear-gradient(180deg,${item.light},${item.color});
+                    opacity:${item.total ? 1 : 0.3}">
+        </div>
+        <span style="font-weight:700;color:${item.color}">
+          ${esc(item.name)}
+        </span>
+        <small class="bar-count">
+          ${item.count} ${item.count === 1 ? 'entry' : 'entries'}
+        </small>
+      </div>
+    `;
+  }).join('');
+}
+
 function renderDashboard(){
+renderSpendingChart();
   const ex=monthExpenses(),spent=ex.reduce((a,e)=>a+e.amount,0),remain=Number(cache.budget||0)-spent;
 sBudget.textContent=money(cache.budget);sSpent.textContent=money(spent);sRemain.textContent=money(remain);sRemain.className='stat-value '+(remain<0?'red':'green');sTasks.textContent=cache.tasks.filter(t=>!t.done).length;
 
@@ -243,7 +332,7 @@ function openModal(type){modal.classList.remove('hidden');expenseForm.classList.
   mSaved.value=cache.saved||0;
   mTargetDate.value=cache.targetDate||'';
 }}
-
+	
 function closeModal(){modal.classList.add('hidden')}
 async function saveModal(){
   if(!currentUser)return;
