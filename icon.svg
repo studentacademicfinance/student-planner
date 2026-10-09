@@ -1,0 +1,41 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#4f46e5"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="100" fill="url(#bg)"/>
+
+  <!-- Small SP label at the upper-left -->
+  <text x="38" y="72"
+        font-family="Arial, sans-serif"
+        font-size="42"
+        font-weight="700"
+        fill="#ffffff">SP</text>
+
+  <!-- Planner notebook -->
+  <rect x="112" y="112" width="300" height="320" rx="28" fill="#ffffff"/>
+
+  <!-- Binder rings -->
+  <rect x="76" y="160" width="76" height="26" rx="13" fill="#ffffff"/>
+  <rect x="76" y="250" width="76" height="26" rx="13" fill="#ffffff"/>
+  <rect x="76" y="340" width="76" height="26" rx="13" fill="#ffffff"/>
+
+  <!-- First checkbox -->
+  <rect x="158" y="158" width="54" height="54" rx="12" fill="#635bff"/>
+  <path d="M171 184 L183 196 L201 174" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="232" y="176" width="142" height="14" rx="7" fill="#a5a0ff"/>
+
+  <!-- Second checkbox -->
+  <rect x="158" y="248" width="54" height="54" rx="12" fill="#635bff"/>
+  <path d="M171 274 L183 286 L201 264" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="232" y="266" width="142" height="14" rx="7" fill="#a5a0ff"/>
+
+  <!-- Third checkbox -->
+  <rect x="158" y="338" width="54" height="54" rx="12" fill="#635bff"/>
+  <path d="M171 364 L183 376 L201 354" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="232" y="356" width="142" height="14" rx="7" fill="#a5a0ff"/>
+</svg>
