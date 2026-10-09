@@ -1,0 +1,11 @@
+
+{
+  "name": "Student Planner",
+  "short_name": "Planner",
+  "description": "Manage academic tasks, deadlines, expenses, and savings.",
+  "start_url": "/student-planner/",
+  "scope": "/student-planner/",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#635bff"
+}
