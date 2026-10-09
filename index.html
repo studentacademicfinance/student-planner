@@ -94,8 +94,19 @@ button,input,select{font:inherit}button{cursor:pointer;border:0}.hidden{display:
 </aside>
 <main class="main">
 <section id="dashboard" class="section active">
-<div class="page-title"><div><h1 id="hello">Good morning</h1><p>Here's your academic and financial overview.</p></div><button class="action" onclick="openModal('expense')">+ Add Expense</button></div>
-<div class="grid stats">
+
+<div class="page-title">
+  <div>
+    <h1 id="hello">Good morning</h1>
+    <p>Here's your academic and financial overview.</p>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="small-btn" id="enableNotificationsBtn" onclick="enablePushNotifications()">
+      Enable Notifications
+    </button>
+    <button class="action" onclick="openModal('expense')">+ Add Expense</button>
+  </div>
+</div><div class="grid stats">
 <div class="card"><div class="stat-label">Monthly Budget</div><div id="sBudget" class="stat-value">₱0</div><div class="sub">Your planned spending limit</div></div>
 <div class="card"><div class="stat-label">Total Spent</div><div id="sSpent" class="stat-value red">₱0</div><div class="sub">Expenses this month</div></div>
 <div class="card"><div class="stat-label">Remaining</div><div id="sRemain" class="stat-value green">₱0</div><div class="sub">Available budget</div></div>
@@ -369,6 +380,21 @@ toast('Budget updated.');  }
 }
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 
+async function enablePushNotifications() {
+  if (!currentUser) {
+    return toast('Please sign in first.');
+  }
+
+  if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+    return toast('Push notifications are not supported by this browser.');
+  }
+
+  if (!('Notification' in window)) {
+    return toast('Notifications are not supported by this browser.');
+  }
+
+  toast('Button connected. Push setup is not finished yet.');
+}
 (async()=>{const {data}=await sb.auth.getSession();if(data.session)await startApp(data.session.user);sb.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_OUT'){currentUser=null;auth.classList.remove('hidden');app.classList.add('hidden')}})})()
 </script>
 	
