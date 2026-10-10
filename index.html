@@ -55,6 +55,65 @@ button,input,select{font:inherit}button{cursor:pointer;border:0}.hidden{display:
 .empty{padding:28px;text-align:center;color:var(--muted)}
 @media(max-width:950px){.stats{grid-template-columns:repeat(2,1fr)}.two,.three{grid-template-columns:1fr}.side{width:75px}.side .nav span{display:none}.side .logo{justify-content:center}.side .logo div:last-child{display:none}}
 @media(max-width:650px){.topbar{padding:0 15px}.main{padding:18px 14px}.stats{grid-template-columns:1fr 1fr}.cal-cell{min-height:78px}.cal-grid{font-size:10px}.card{padding:16px}.page-title{align-items:flex-start;gap:12px}.page-title h1{font-size:23px}}
+```css
+/* Notification Toggle */
+.notification-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease;
+}
+
+.notification-toggle-track {
+  display: inline-flex;
+  align-items: center;
+  width: 44px;
+  height: 25px;
+  padding: 3px;
+  border-radius: 99px;
+  transition: background .2s ease;
+}
+
+.notification-toggle-knob {
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .2);
+  transition: transform .2s ease;
+}
+
+.notification-toggle.is-on .notification-toggle-track {
+  background: #16a34a;
+}
+
+.notification-toggle.is-on .notification-toggle-knob {
+  transform: translateX(19px);
+}
+
+.notification-toggle.is-off .notification-toggle-track {
+  background: #ef4444;
+}
+
+.notification-toggle:disabled {
+  opacity: .65;
+  cursor: wait;
+}
+
+@media (max-width: 650px) {
+  .notification-toggle {
+    gap: 7px;
+    padding: 7px 8px;
+  }
+}
 </style>
 </head>
 <body>
@@ -101,9 +160,21 @@ button,input,select{font:inherit}button{cursor:pointer;border:0}.hidden{display:
     <p>Here's your academic and financial overview.</p>
   </div>
   <div style="display:flex;gap:8px;flex-wrap:wrap">
-    <button class="small-btn" id="enableNotificationsBtn" onclick="enablePushNotifications()">
-      Enable Notifications
-    </button>
+
+<button
+  class="notification-toggle is-off"
+  id="enableNotificationsBtn"
+  type="button"
+  role="switch"
+  aria-checked="false"
+  onclick="togglePushNotifications()"
+>
+  <span class="notification-toggle-label">Notifications</span>
+  <span class="notification-toggle-track">
+    <span class="notification-toggle-knob"></span>
+  </span>
+</button>
+
     <button class="action" onclick="openModal('expense')">+ Add Expense</button>
   </div>
 </div><div class="grid stats">
