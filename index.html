@@ -55,7 +55,7 @@ button,input,select{font:inherit}button{cursor:pointer;border:0}.hidden{display:
 .empty{padding:28px;text-align:center;color:var(--muted)}
 @media(max-width:950px){.stats{grid-template-columns:repeat(2,1fr)}.two,.three{grid-template-columns:1fr}.side{width:75px}.side .nav span{display:none}.side .logo{justify-content:center}.side .logo div:last-child{display:none}}
 @media(max-width:650px){.topbar{padding:0 15px}.main{padding:18px 14px}.stats{grid-template-columns:1fr 1fr}.cal-cell{min-height:78px}.cal-grid{font-size:10px}.card{padding:16px}.page-title{align-items:flex-start;gap:12px}.page-title h1{font-size:23px}}
-```css
+	
 /* Notification Toggle */
 .notification-toggle {
   display: inline-flex;
@@ -114,7 +114,161 @@ button,input,select{font:inherit}button{cursor:pointer;border:0}.hidden{display:
     padding: 7px 8px;
   }
 }
+
+/* Mobile-app inspired responsive layout */
+:root{--brand:#3478f6;--brand2:#2563eb;--bg:#f5f8fd;--line:#dfe7f2;--shadow:0 3px 14px rgba(39,70,115,.055)}
+body{background:var(--bg);font-size:13px}
+.topbar{height:64px;padding:0 26px;background:#fff;border-bottom:1px solid #e4eaf3}
+.logo{font-size:17px}.logo-mark{background:linear-gradient(135deg,#4389ff,#2864df)}
+.layout{min-height:calc(100vh - 64px)}.side{flex:0 0 218px;width:218px;border-right:1px solid #e4eaf3}
+.nav{border-radius:9px;font-size:12px}.nav.active,.nav:hover{background:#eaf2ff;color:#2869e9}
+.main{padding:25px;max-width:1500px}.page-title h1{font-size:24px;letter-spacing:-.5px}
+.card{border-radius:13px;border-color:#e1e8f2;box-shadow:var(--shadow);padding:18px}
+.grid{gap:14px}.stat-value{font-size:23px}.action,.primary{background:#3478f6;border-radius:8px}
+.small-btn,.secondary{border:1px solid #dfe7f2;background:#f7faff;color:#42618b;border-radius:8px}
+.module-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.module-card{display:flex;align-items:center;gap:14px;text-align:left;padding:20px;border:1px solid #e1e8f2;border-radius:13px;background:#fff;min-height:105px;color:#243653}
+.module-card>span:nth-child(2){display:flex;flex-direction:column;gap:7px;flex:1}.module-card b{font-size:14px}.module-card small{font-size:11px;line-height:1.5;color:#748198}.module-icon{display:grid;place-items:center;width:48px;height:48px;border-radius:13px;font-size:25px;flex-shrink:0}.module-arrow{font-size:24px;color:#9aa7ba}
+.finance-module{background:#f4fbf5;border-color:#d9efdf}.finance-module .module-icon{background:#d9f4df;color:#36a365}
+.academic-module{background:#f7f5ff;border-color:#e6dfff}.academic-module .module-icon{background:#ebe5ff;color:#8b6be8}
+.analytics-module{background:#fffaf0;border-color:#f7ebd2}.analytics-module .module-icon{background:#fff0c9;color:#e7ae28}
+.settings-module{background:#f6f8fc;border-color:#e3e8f0}.settings-module .module-icon{background:#e7ecf4;color:#71809a}
+.finance-tabs{display:flex;gap:22px;overflow:auto;border-bottom:1px solid #e0e7f1;margin:-6px 0 16px;padding:0 4px}.finance-tab{white-space:nowrap;background:transparent;padding:12px 4px;color:#758197;border-bottom:3px solid transparent;font-size:12px;font-weight:700}.finance-tab.active{color:#3478f6;border-bottom-color:#3478f6}
+.finance-balance-card{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}.finance-chart-row{display:flex;align-items:center;gap:20px;min-height:175px}.donut{width:142px;height:142px;flex-shrink:0;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#3478f6 0deg,#42b6aa 110deg,#f6b844 165deg,#ef737d 230deg,#8b6be8 290deg,#3478f6 360deg);position:relative}.donut-hole{width:88px;height:88px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center}.donut-hole b{font-size:12px}.donut-hole small{font-size:10px;color:#758197;margin-top:4px}.finance-legend{display:flex;flex-direction:column;gap:10px;min-width:0;flex:1}.legend-row{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:#61708a}.legend-name{display:flex;align-items:center;gap:7px}.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.mobile-bottom-nav{display:none}
+@media(max-width:950px){.side{flex-basis:190px;width:190px}.grid.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.two,.grid.three{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){
+ .topbar{height:56px;padding:0 13px}.topbar .logo{font-size:14px;gap:8px}.topbar .logo-mark{width:31px;height:31px}.top-right{gap:8px}.top-right #todayText{display:none}.top-right .small-btn{padding:7px 9px}
+ .layout{display:block;min-height:calc(100vh - 56px)}.side{display:none!important}.main{padding:17px 13px 88px;max-width:none}
+ .mobile-bottom-nav{position:fixed;z-index:40;left:0;right:0;bottom:0;height:66px;display:flex;align-items:center;justify-content:space-around;background:rgba(255,255,255,.97);border-top:1px solid #dfe7f2;padding:5px 4px calc(5px + env(safe-area-inset-bottom));box-shadow:0 -3px 16px rgba(35,57,94,.06)}
+ .mobile-nav-item{display:flex;flex:1;min-width:0;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:transparent;color:#7c8798;padding:5px 1px;border-radius:8px}.mobile-nav-item span{font-size:20px;line-height:1.1}.mobile-nav-item small{font-size:9px;font-weight:600}.mobile-nav-item.active{color:#3478f6}
+ .page-title{align-items:flex-start;gap:12px;margin-bottom:17px;flex-wrap:wrap}.page-title h1{font-size:21px}.page-title p{font-size:11px}
+ .grid.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.grid.two,.grid.three{grid-template-columns:minmax(0,1fr);gap:12px}.card{padding:15px;border-radius:12px}.stat-label{font-size:10px}.stat-value{font-size:19px}.card-head h3{font-size:13px}
+ .module-grid{grid-template-columns:1fr;gap:10px}.module-card{min-height:86px;padding:14px}.module-icon{width:43px;height:43px}.module-card b{font-size:13px}
+ .finance-tabs{gap:18px}.finance-balance-card{align-items:flex-start;gap:10px}.finance-chart-row{gap:14px;align-items:center}.donut{width:118px;height:118px}.donut-hole{width:74px;height:74px}.donut-hole b{font-size:10px}.finance-legend{gap:9px}.legend-row{font-size:10px}
+ .bar-wrap{height:165px}.table{min-width:580px}.cal-cell{min-height:70px;padding:5px}.date-num{font-size:10px}.event{font-size:9px;padding:3px}
+ #settings .row{align-items:flex-start}.modal{padding:12px}.modal-box{padding:18px;border-radius:15px;max-height:90vh;overflow:auto}.toast{right:12px;bottom:78px;left:12px;text-align:center}
+}
+
+
+/* Category limits and calendar task list */
+.category-limit-form{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end}
+.category-limit-form .field{margin:0}
+.category-limit-form .action{min-height:41px;white-space:nowrap}
+.category-limit-item{padding:13px 0;border-bottom:1px solid var(--line)}
+.category-limit-item:last-child{border-bottom:0}
+.category-limit-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:9px}
+.category-limit-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px}
+.category-limit-item .progress span{background:linear-gradient(90deg,#65c77a,#42b77a)}
+.category-limit-item .progress span.limit-over{background:#ed6a76}
+.calendar-weekday{padding:9px 5px;background:#f7faff;border-right:1px solid var(--line);font-size:11px;font-weight:700;color:var(--muted);text-align:center}
+.cal-cell.is-today{background:#f0f6ff;box-shadow:inset 0 0 0 1px #8bb5ff}
+.event-done{background:#e7f7ed;color:#248052;text-decoration:line-through}
+.calendar-task-row{display:flex;gap:12px}
+.calendar-task-dot{width:9px;height:9px;flex:0 0 9px;border-radius:50%;background:#f5b942}
+.calendar-task-dot.done{background:#42b883}
+.calendar-task-info{flex:1;min-width:0}
+.task-completed{text-decoration:line-through;color:var(--muted)}
+.calendar-task-check{display:flex;align-items:center}
+.calendar-task-check input{accent-color:#3478f6;width:16px;height:16px}
+@media(max-width:650px){.category-limit-form{grid-template-columns:1fr}.category-limit-form .action{width:100%}.category-limit-top{align-items:flex-start;flex-direction:column}.category-limit-right{width:100%;justify-content:space-between}.calendar-task-row{gap:8px}.cal-cell{padding:5px;min-height:72px}.event{font-size:9px;padding:3px}}
+
+/* Category limits and calendar task list */
+.category-limit-form{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:12px;align-items:end}
+.category-limit-form .field{margin:8px 0}
+.category-limit-item{padding:13px 0;border-bottom:1px solid var(--line)}
+.category-limit-item:last-child{border-bottom:0}
+.category-limit-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+.category-limit-right{display:flex;align-items:center;gap:10px;text-align:right}
+.progress .limit-over{background:linear-gradient(90deg,#ef4444,#f97373)}
+.calendar-task-row{gap:10px}
+.calendar-task-dot{width:9px;height:9px;flex:0 0 9px;border-radius:50%;background:#f5b942}
+.calendar-task-dot.done{background:#42b883}
+.calendar-task-info{flex:1;min-width:0}
+.task-completed{text-decoration:line-through;color:var(--muted)}
+.calendar-task-check{display:flex;align-items:center}
+.calendar-weekday{padding:9px 5px;background:#f5f8fd;border-right:1px solid var(--line);font-size:11px;font-weight:700;color:var(--muted);text-align:center}
+.cal-cell.is-today{background:#eef5ff}
+.event-done{background:#e5f7ee;color:#24835a}
+@media(max-width:650px){.category-limit-form{grid-template-columns:1fr}.category-limit-form .action{width:100%}.category-limit-top{align-items:flex-start}.category-limit-right{flex-direction:column;align-items:flex-end;gap:6px}.cal-cell{padding:5px;min-height:68px}.event{font-size:9px;padding:3px}}
+
+
+/* Hamburger and slide-out module chooser */
+.topbar-brand{display:flex;align-items:center;gap:14px;min-width:0}
+.hamburger-btn{width:36px;height:36px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;background:#f5f8fd;border:1px solid #e0e8f3;border-radius:9px;flex-shrink:0}
+.hamburger-btn span{display:block;width:16px;height:2px;background:#314766;border-radius:2px}
+.module-drawer{position:fixed;z-index:70;top:0;bottom:0;left:0;width:min(340px,88vw);padding:22px 16px;background:#fff;border-right:1px solid #e0e7f1;box-shadow:12px 0 35px rgba(25,45,80,.13);transform:translateX(-105%);transition:transform .24s ease;overflow-y:auto}
+.module-drawer.open{transform:translateX(0)}
+.module-drawer-backdrop{position:fixed;z-index:69;inset:0;background:rgba(18,32,54,.32);opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s ease}
+.module-drawer-backdrop.open{opacity:1;visibility:visible}
+.drawer-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:5px 4px 20px;border-bottom:1px solid #e8edf5;margin-bottom:15px}
+.drawer-heading b{display:block;font-size:17px;color:#1d3152}
+.drawer-heading small{display:block;margin-top:5px;font-size:11px;color:#7b879b}
+.drawer-close{width:30px;height:30px;border-radius:8px;background:#f2f6fc;color:#425875;font-size:22px;line-height:1}
+.drawer-module{display:flex;align-items:center;gap:12px;width:100%;min-height:72px;padding:12px;margin:8px 0;border:1px solid #e1e8f2;border-radius:12px;text-align:left;background:#fff;color:#243653}
+.drawer-module>span:nth-child(2){display:flex;flex-direction:column;gap:5px;min-width:0}
+.drawer-module b{font-size:12px}.drawer-module small{font-size:10px;line-height:1.45;color:#748198}
+.drawer-icon{width:40px;height:40px;display:grid;place-items:center;border-radius:11px;background:#d9f4df;color:#36a365;font-size:22px;flex-shrink:0}
+.drawer-icon.home-icon{background:#eaf2ff;color:#3478f6}
+body.drawer-open{overflow:hidden}
+@media(max-width:650px){.topbar-brand{gap:9px}.hamburger-btn{width:32px;height:32px}.topbar .logo{font-size:13px}.module-drawer{padding:18px 13px}}
+
+
+
+/* Working Light/Dark theme support */
+body.dark-mode{
+  --bg:#0b1220;--card:#111b2d;--ink:#e8eef8;--muted:#a5b2c7;--line:#29364b;
+  --shadow:0 8px 24px rgba(0,0,0,.22);
+  background:var(--bg);color:var(--ink);color-scheme:dark;
+}
+body.dark-mode .topbar,body.dark-mode .side,body.dark-mode .card,
+body.dark-mode .auth-card,body.dark-mode .modal-box,body.dark-mode .module-card,
+body.dark-mode .module-drawer,body.dark-mode .drawer-panel,
+body.dark-mode .notification-toggle{background:var(--card);color:var(--ink);border-color:var(--line)}
+body.dark-mode .auth{background:radial-gradient(circle at 10% 10%,#20234a,transparent 35%),radial-gradient(circle at 90% 90%,#12352f,transparent 35%),#0b1220}
+body.dark-mode .nav{color:var(--muted)}
+body.dark-mode .nav.active,body.dark-mode .nav:hover{background:#1b2b48;color:#91b8ff}
+body.dark-mode .small-btn,body.dark-mode .secondary,body.dark-mode .close,
+body.dark-mode .toolbar input,body.dark-mode .toolbar select,
+body.dark-mode .field input,body.dark-mode .field select,
+body.dark-mode input,body.dark-mode select,body.dark-mode textarea{background:#0c1525;color:var(--ink);border-color:var(--line)}
+body.dark-mode .field input::placeholder,body.dark-mode input::placeholder,body.dark-mode textarea::placeholder{color:#8291a8}
+body.dark-mode .row{border-bottom-color:var(--line)}
+body.dark-mode .pill{background:#263349;color:#dbe7f8}
+body.dark-mode .pill.high{background:#4a252e;color:#fecaca}
+body.dark-mode .pill.medium{background:#49391d;color:#fde68a}
+body.dark-mode .pill.low{background:#173b30;color:#bbf7d0}
+body.dark-mode .progress{background:#273349}
+body.dark-mode .cal-cell{background:#111b2d;border-color:var(--line);color:var(--ink)}
+body.dark-mode .cal-cell.muted{background:#0c1525;color:#718096}
+body.dark-mode .calendar-weekday{background:#17243a;border-color:var(--line);color:var(--muted)}
+body.dark-mode .cal-cell.is-today{background:#172b49;box-shadow:inset 0 0 0 1px #477cc8}
+body.dark-mode .event{background:#292653;color:#c9c5ff}
+body.dark-mode .event-done{background:#173b30;color:#a7f3d0}
+body.dark-mode .calendar-task-dot{background:#eabf59}
+body.dark-mode .calendar-task-dot.done{background:#42b883}
+body.dark-mode .table th,body.dark-mode .table td{border-bottom-color:var(--line)}
+body.dark-mode .settings-module{background:#17243a;border-color:var(--line)}
+body.dark-mode .settings-module .module-icon{background:#263349;color:#b6c6df}
+body.dark-mode .module-card small{color:var(--muted)}
+body.dark-mode .module-icon{background:#202e46;color:#b9ceff}
+body.dark-mode .toast{background:#e8eef8;color:#111827}
+body.dark-mode .avatar{background:#24264c;color:#b9c5ff}
+body.dark-mode .auth-card{box-shadow:var(--shadow)}
+body.dark-mode .action,body.dark-mode .primary{color:#fff}
+body.dark-mode .calendar-task-check input{accent-color:#78aaff}
+
+
+.savings-hero{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.savings-progress{height:10px;background:#edf1f6;border-radius:99px;overflow:hidden;margin:16px 0 10px}.savings-progress span{display:block;height:100%;background:linear-gradient(90deg,#3988f6,#62b3ff);border-radius:99px}.goal-purpose{display:inline-flex;background:#eef5ff;color:#356fc7;border-radius:99px;padding:6px 10px;font-size:11px;font-weight:700;margin-top:10px}.task-detail-label{font-size:11px;color:var(--muted);margin-bottom:5px}.task-detail-value{font-size:14px;font-weight:650;line-height:1.5}.task-detail-block{padding:12px 0;border-bottom:1px solid var(--line)}.task-detail-header{display:flex;align-items:center;justify-content:space-between;gap:12px}.task-title-button{border:0;background:transparent;color:var(--ink);padding:0;text-align:left;font-weight:750}.task-title-button:hover{color:var(--brand);text-decoration:underline}.report-limit-row{padding:12px 0;border-bottom:1px solid var(--line)}@media(max-width:650px){.savings-hero{grid-template-columns:1fr}}
 </style>
+<script>
+(function(){
+  try { if (localStorage.getItem('studentPlannerTheme') === 'dark') document.documentElement.classList.add('theme-dark-start'); }
+  catch(e) {}
+})();
+</script>
+<style>html.theme-dark-start body{background:#0b1220;color:#e8eef8}</style>
+
 </head>
 <body>
 <div id="auth" class="auth">
@@ -140,17 +294,67 @@ button,input,select{font:inherit}button{cursor:pointer;border:0}.hidden{display:
 
 <div id="app" class="app hidden">
 <header class="topbar">
-  <div class="logo"><div class="logo-mark">SP</div><div>Student Planner</div></div>
+  <div class="topbar-brand">
+    <button class="hamburger-btn" type="button" aria-label="Open module menu" aria-expanded="false" onclick="toggleModuleDrawer()"><span></span><span></span><span></span></button>
+    <div class="logo"><div class="logo-mark">SP</div><div>Student Planner</div></div>
+  </div>
   <div class="top-right"><span id="todayText" class="sub"></span><div id="avatar" class="avatar">S</div><button class="small-btn" onclick="logout()">Logout</button></div>
 </header>
-<div class="layout">
-<aside class="side">
-  <div class="nav active" data-section="dashboard" onclick="go('dashboard')">◉ <span>Dashboard</span></div>
-  <div class="nav" data-section="expenses" onclick="go('expenses')">₱ <span>Expenses</span></div>
-  <div class="nav" data-section="tasks" onclick="go('tasks')">✓ <span>Academic Tasks</span></div>
-  <div class="nav" data-section="calendar" onclick="go('calendar')">▦ <span>Calendar</span></div>
-  <div class="nav" data-section="budget" onclick="go('budget')">◎ <span>Budget & Savings</span></div>
+<div id="moduleDrawerBackdrop" class="module-drawer-backdrop" onclick="closeModuleDrawer()"></div>
+<aside id="moduleDrawer" class="module-drawer" aria-label="Choose a Module" aria-hidden="true">
+  <div class="drawer-heading"><div><b>Choose a Module</b><small>Select what you want to manage.</small></div><button type="button" class="drawer-close" aria-label="Close menu" onclick="closeModuleDrawer()">×</button></div>
+  <button class="drawer-module" onclick="openModule('dashboard')"><span class="drawer-icon home-icon">⌂</span><span><b>Home</b><small>Your academic and financial overview.</small></span></button>
+  <button class="drawer-module finance-module" onclick="openModule('finance')"><span class="drawer-icon">▣</span><span><b>Finance Management</b><small>Expenses, budget, category limits and savings.</small></span></button>
+  <button class="drawer-module academic-module" onclick="openModule('tasks')"><span class="drawer-icon">▱</span><span><b>Academic Planning</b><small>Tasks, deadlines and schedules.</small></span></button>
+  <button class="drawer-module analytics-module" onclick="openModule('analytics')"><span class="drawer-icon">◔</span><span><b>Reports</b><small>Review your financial summaries.</small></span></button>
+  <button class="drawer-module settings-module" onclick="openModule('settings')"><span class="drawer-icon">⚙</span><span><b>Settings</b><small>Account and notification preferences.</small></span></button>
 </aside>
+<div class="layout">
+
+<aside class="side">
+  <div class="nav active" data-section="dashboard"
+       onclick="go('dashboard')">
+    ◉ <span>Dashboard</span>
+  </div>
+
+  <div class="nav" data-section="expenses"
+       onclick="go('expenses')">
+    ₱ <span>Expenses</span>
+  </div>
+
+  <div class="nav" data-section="tasks"
+       onclick="go('tasks')">
+    ✓ <span>Academic Tasks</span>
+  </div>
+
+  <div class="nav" data-section="calendar"
+       onclick="go('calendar')">
+    ▦ <span>Academic Calendar</span>
+  </div>
+
+  <div class="nav" data-section="budget"
+       onclick="go('budget')">
+    ◎ <span>Budget & Savings</span>
+  </div>
+
+  <div class="nav" data-section="analytics"
+       onclick="go('analytics')">
+    ▤ <span>Reports</span>
+  </div>
+
+  <div class="nav" data-section="settings"
+       onclick="go('settings')">
+    ⚙ <span>Settings</span>
+  </div>
+</aside>
+<nav class="mobile-bottom-nav" aria-label="Main navigation">
+  <button class="mobile-nav-item active" data-mobile="dashboard" onclick="go('dashboard')"><span>⌂</span><small>Home</small></button>
+  <button class="mobile-nav-item" data-mobile="finance" onclick="go('finance')"><span>▣</span><small>Finance</small></button>
+  <button class="mobile-nav-item" data-mobile="calendar" onclick="go('calendar')"><span>▦</span><small>Calendar</small></button>
+  <button class="mobile-nav-item" data-mobile="analytics" onclick="go('analytics')"><span>▥</span><small>Reports</small></button>
+  <button class="mobile-nav-item" data-mobile="settings" onclick="go('settings')"><span>♙</span><small>Profile</small></button>
+</nav>
+
 <main class="main">
 <section id="dashboard" class="section active">
 
@@ -161,21 +365,7 @@ button,input,select{font:inherit}button{cursor:pointer;border:0}.hidden{display:
   </div>
   <div style="display:flex;gap:8px;flex-wrap:wrap">
 
-<button
-  class="notification-toggle is-off"
-  id="enableNotificationsBtn"
-  type="button"
-  role="switch"
-  aria-checked="false"
-  onclick="togglePushNotifications()"
->
-  <span class="notification-toggle-label">Notifications</span>
-  <span class="notification-toggle-track">
-    <span class="notification-toggle-knob"></span>
-  </span>
-</button>
-
-    <button class="action" onclick="openModal('expense')">+ Add Expense</button>
+<button class="action" onclick="openModal('expense')">+ Add Expense</button>
   </div>
 </div><div class="grid stats">
 <div class="card"><div class="stat-label">Monthly Budget</div><div id="sBudget" class="stat-value">₱0</div><div class="sub">Your planned spending limit</div></div>
@@ -204,20 +394,140 @@ button,input,select{font:inherit}button{cursor:pointer;border:0}.hidden{display:
 </section>
 
 <section id="calendar" class="section">
-<div class="page-title"><div><h1>Academic Calendar</h1><p>Visualize your deadlines and school schedule.</p></div><button class="action" onclick="openModal('task')">+ Add Task</button></div>
+<div class="page-title"><div><h1>Academic Calendar</h1><p>View your deadlines and the tasks scheduled for each date.</p></div><button class="action" onclick="openModal('task')">+ Add Task</button></div>
 <div class="card"><div class="calendar-head"><button class="small-btn" onclick="changeMonth(-1)">←</button><h3 id="monthTitle"></h3><button class="small-btn" onclick="changeMonth(1)">→</button></div><div class="cal-grid" id="calendarGrid"></div></div>
+<div class="card" style="margin-top:16px"><div class="card-head"><h3>Scheduled Tasks</h3><span class="pill" id="calendarTaskCount">0 tasks</span></div><div id="calendarTaskList" class="list"></div></div>
 </section>
 
 <section id="budget" class="section">
-<div class="page-title"><div><h1>Budget & Savings</h1><p>Set your monthly spending limit and savings target.</p></div><button class="action" onclick="openModal('budget')">Edit budget</button></div>
-<div class="grid three">
-<div class="card"><div class="stat-label">Monthly budget</div><div class="stat-value" id="bBudget">₱0</div></div>
-<div class="card"><div class="stat-label">Spent</div><div class="stat-value red" id="bSpent">₱0</div></div>
-<div class="card"><div class="stat-label">Remaining</div><div class="stat-value green" id="bRemain">₱0</div></div>
-</div>
-<div class="grid two" style="margin-top:18px"><div class="card"><div class="card-head"><h3>Budget utilization</h3><span id="budgetPct" class="pill">0%</span></div><div class="progress"><span id="budgetBar" style="width:0%"></span></div><p id="budgetHint" class="sub"></p></div><div class="card"><div class="card-head"><h3>Savings goal</h3></div><div id="budgetSaving" class="stat-value">₱0 / ₱0</div><div class="progress"><span id="budgetSaveBar" style="width:0%"></span></div></div></div>
+<div class="page-title"><div><h1>My Budget</h1><p>Set your monthly budget and category spending limits.</p></div><button class="action" onclick="openModal('budget')">Edit Budget</button></div>
+<div class="grid three"><div class="card"><div class="stat-label">Total Budget</div><div class="stat-value" id="bBudget">₱0.00</div></div><div class="card"><div class="stat-label">Spent This Month</div><div class="stat-value red" id="bSpent">₱0.00</div></div><div class="card"><div class="stat-label">Remaining</div><div class="stat-value green" id="bRemain">₱0.00</div></div></div>
+<div class="card" style="margin-top:16px"><div class="card-head"><h3>Budget Overview</h3><span id="budgetPct" class="pill">0%</span></div><div class="progress"><span id="budgetBar" style="width:0%"></span></div><p id="budgetHint" class="sub"></p></div>
+<div class="card" style="margin-top:16px"><div class="card-head"><div><h3>Category Spending Limits</h3><p class="sub">Set the maximum amount for each category per month.</p></div></div><div class="category-limit-form"><div class="field"><label for="limitCategory">Category</label><select id="limitCategory"><option>Food</option><option>Transportation</option><option>School</option><option>Personal</option><option>Others</option></select></div><div class="field"><label for="limitAmount">Monthly limit (₱)</label><input id="limitAmount" type="number" min="0.01" step="0.01" placeholder="e.g. 2000"></div><button class="action" type="button" onclick="saveCategoryLimit()">Save Category Limit</button></div><div id="categoryLimitList" class="list" style="margin-top:12px"></div></div>
 </section>
-</main></div></div>
+<section id="savings" class="section">
+<div class="page-title"><div><h1>My Savings</h1><p>Track your savings goals separately from your monthly budget.</p></div><button class="action" onclick="openModal('savings')">Edit Savings Goal</button></div>
+<div class="savings-hero"><div class="card"><div class="stat-label">Savings Goal</div><h2 id="savingsGoalName" style="margin:10px 0 5px;font-size:20px">My Savings Goal</h2><div class="sub" id="savingsGoalTarget">Target: ₱0.00</div><div id="savingsPurpose" class="goal-purpose">Purpose not set</div><div class="savings-progress"><span id="savingsProgressBar" style="width:0%"></span></div><div class="row"><b id="savingsCurrent">₱0.00 / ₱0.00</b><b id="savingsPercent">0%</b></div><p class="sub" id="savingsDueDate">No target date set</p></div>
+<div class="card"><div class="card-head"><h3>Savings Summary</h3></div><div class="stat-label">Amount Saved</div><div class="stat-value green" id="savingsSavedSummary">₱0.00</div><div class="stat-label" style="margin-top:18px">Still Needed</div><div class="stat-value" id="savingsNeeded">₱0.00</div><button class="action" style="width:100%;margin-top:14px" onclick="openModal('savings')">Update Savings</button></div></div>
+<div class="card" style="margin-top:16px"><div class="card-head"><h3>Recent Savings</h3></div><div class="empty">Your saved amount is shown above. A dated savings history can be added separately.</div></div>
+</section>
+<section id="taskDetail" class="section"><div class="page-title"><div><button class="small-btn" onclick="go('tasks')">← Back to Tasks</button><h1 style="margin-top:14px">Task Details</h1></div><button class="small-btn" onclick="editCurrentTask()">✎ Edit</button></div><div class="card"><div class="task-detail-header"><h2 id="detailTaskTitle" style="margin:0 0 8px;font-size:21px">Task title</h2><span id="detailTaskStatus" class="pill medium">Pending</span></div><div class="task-detail-block"><div class="task-detail-label">Date</div><div class="task-detail-value" id="detailTaskDate">—</div></div><div class="task-detail-block"><div class="task-detail-label">Time</div><div class="task-detail-value" id="detailTaskTime">—</div></div><div class="task-detail-block"><div class="task-detail-label">Subject</div><div class="task-detail-value" id="detailTaskSubject">—</div></div><div class="task-detail-block"><div class="task-detail-label">Priority</div><div class="task-detail-value" id="detailTaskPriority">—</div></div><div class="task-detail-block"><div class="task-detail-label">Description</div><div class="task-detail-value" id="detailTaskDescription">No description provided.</div></div><button class="action" id="completeTaskButton" style="width:100%;margin-top:20px;background:#42b883" onclick="completeCurrentTask()">Mark as Completed</button></div></section>
+<section id="modules" class="section">
+  <div class="page-title"><div><h1>Choose a Module</h1><p>Select what you want to manage.</p></div></div>
+  <div class="module-grid">
+    <button class="module-card finance-module" onclick="go('finance')"><span class="module-icon">▣</span><span><b>Finance Management</b><small>Track expenses, manage budget and savings.</small></span><span class="module-arrow">›</span></button>
+    <button class="module-card academic-module" onclick="go('tasks')"><span class="module-icon">▱</span><span><b>Academic Planning</b><small>View schedules, tasks and deadlines.</small></span><span class="module-arrow">›</span></button>
+    <button class="module-card analytics-module" onclick="go('analytics')"><span class="module-icon">◔</span><span><b>Reports</b><small>View summaries and reports.</small></span><span class="module-arrow">›</span></button>
+    <button class="module-card settings-module" onclick="go('settings')"><span class="module-icon">⚙</span><span><b>Settings</b><small>Manage your account and preferences.</small></span><span class="module-arrow">›</span></button>
+  </div>
+</section>
+
+<section id="finance" class="section">
+  <div class="page-title"><div><h1>Finance</h1><p>Manage your expenses, budget and savings.</p></div><button class="action" onclick="openModal('expense')">+ Add Expense</button></div>
+  <div class="finance-tabs" role="navigation" aria-label="Finance sections">
+    <button class="finance-tab active" onclick="financeTab('overview',this)">Overview</button>
+    <button class="finance-tab" onclick="go('expenses')">Expenses</button>
+    <button class="finance-tab" onclick="go('budget')">Budget</button>
+    <button class="finance-tab" onclick="go('savings')">Savings</button>
+  </div>
+  <div class="card finance-balance-card"><div><div class="stat-label">Remaining Budget This Month</div><div class="stat-value" id="financeBalance">₱0.00</div><div class="sub">Monthly budget minus recorded expenses</div></div><button class="small-btn" onclick="go('budget')">This Month⌄</button></div>
+  <div class="grid two finance-content">
+    <div class="card"><div class="card-head"><h3>Expense Summary</h3></div><div class="finance-chart-row"><div class="donut" id="financeDonut"><div class="donut-hole"><b id="financeSpent">₱0</b><small>Total spent</small></div></div><div class="finance-legend" id="financeLegend"></div></div></div>
+    <div class="card"><div class="card-head"><h3>Recent Transactions</h3><button class="small-btn" onclick="go('expenses')">View all</button></div><div class="list" id="financeRecent"></div></div>
+  </div>
+  <div class="grid two" style="margin-top:16px"><div class="card"><div class="card-head"><h3>Budget Progress</h3><button class="small-btn" onclick="go('budget')">Manage</button></div><div class="progress"><span id="financeBudgetBar" style="width:0%"></span></div><p class="sub" id="financeBudgetHint">No budget set yet.</p></div><div class="card"><div class="card-head"><h3>Savings Goal</h3><button class="small-btn" onclick="go('savings')">View savings</button></div><div class="stat-value" id="financeSavings">₱0 / ₱0</div><div class="progress"><span id="financeSavingsBar" style="width:0%"></span></div></div></div>
+</section>
+
+<section id="analytics" class="section">
+  <div class="page-title">
+    <div>
+      <h1>Reports</h1>
+      <p>Review your financial activity and academic progress.</p>
+    </div>
+  </div>
+
+  <div class="grid three">
+    <div class="card">
+      <div class="stat-label">Monthly Budget</div>
+      <div class="stat-value" id="aBudget">₱0</div>
+    </div>
+
+    <div class="card">
+      <div class="stat-label">Monthly Expenses</div>
+      <div class="stat-value red" id="aExpenses">₱0</div>
+    </div>
+
+    <div class="card">
+      <div class="stat-label">Completed Tasks</div>
+      <div class="stat-value green" id="aTasks">0</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <div class="card-head">
+      <h3>Spending Overview</h3>
+    </div>
+    <div id="analyticsBars" class="bar-wrap"></div><div class="card-head" style="margin-top:20px"><h3>Category Spending Limits</h3><span class="sub">This month</span></div><div id="reportCategoryLimits"></div>
+  </div>
+</section>
+
+<section id="settings" class="section">
+  <div class="page-title">
+    <div>
+      <h1>Settings</h1>
+      <p>Manage your appearance and notification preferences.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <h3>Appearance</h3>
+    </div>
+
+    <div class="row">
+      <div>
+        <b>Light Mode</b>
+        <div class="sub">Use the light interface for your planner.</div>
+      </div>
+
+      <button class="small-btn" id="themeToggle"
+              type="button" onclick="toggleTheme()">
+        Light Mode
+      </button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <div class="card-head">
+      <h3>Notifications</h3>
+    </div>
+
+    <div class="row">
+      <div>
+        <b>Push Notifications</b>
+        <div class="sub">
+          Manage reminders for this account and browser.
+        </div>
+      </div>
+
+      <button
+        class="notification-toggle is-off"
+        id="settingsNotificationBtn"
+        type="button"
+        role="switch"
+        aria-checked="false"
+        onclick="togglePushNotifications(this)">
+        <span class="notification-toggle-label">Notifications</span>
+        <span class="notification-toggle-track">
+          <span class="notification-toggle-knob"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+</section>
+</main>
+</div>
+</div>
 
 <div id="modal" class="modal hidden" onclick="if(event.target===this)closeModal()"><div class="modal-box">
 <div class="modal-head"><h2 id="modalTitle" style="margin:0">Add</h2><button class="close" onclick="closeModal()">✕</button></div>
@@ -231,11 +541,38 @@ button,input,select{font:inherit}button{cursor:pointer;border:0}.hidden{display:
 <div class="field"><label>Task title</label><input id="tTitle" placeholder="e.g. Research paper"></div>
 <div class="field"><label>Subject</label><input id="tSubject" placeholder="e.g. Capstone"></div>
 <div class="field"><label>Due date</label><input id="tDate" type="date"></div>
+<div class="field"><label>Due time (optional)</label><input id="tTime" type="time"><small class="sub">The time will be saved and shown in your calendar. Notifications will be configured in a later step.</small></div>
 <div class="field"><label>Priority</label><select id="tPriority"><option>High</option><option selected>Medium</option><option>Low</option></select></div>
 </div>
+<div id="savingsForm" class="hidden"><div class="field"><label>Savings Goal Name</label><input id="sGoalName" maxlength="100" placeholder="e.g. New Laptop"></div><div class="field"><label>Purpose</label><input id="sPurpose" maxlength="250" placeholder="e.g. School expenses"></div><div class="field"><label>Target Amount (₱)</label><input id="sGoalTarget" type="number" min="0" step="0.01"></div><div class="field"><label>Current Savings (₱)</label><input id="sGoalCurrent" type="number" min="0" step="0.01"></div><div class="field"><label>Target Date</label><input id="sGoalDate" type="date"></div></div>
 <div id="budgetForm" class="hidden">
 <div class="field"><label>Monthly budget</label><input id="mBudget" type="number" min="0" placeholder="1500"></div>
-<div class="field"><label>Savings goal</label><input id="mGoal" type="number" min="0" placeholder="5000"></div>
+
+<div class="field">
+  <label>Savings Goal Name</label>
+  <input id="mGoalName"
+         type="text"
+         maxlength="100"
+         placeholder="e.g. New Phone">
+</div>
+
+<div class="field">
+  <label>Purpose of Saving</label>
+  <input id="mPurpose"
+         type="text"
+         maxlength="250"
+         placeholder="e.g. For school expenses">
+</div>
+
+<div class="field">
+  <label>Target Amount</label>
+  <input id="mGoal"
+         type="number"
+         min="0"
+         step="0.01"
+         placeholder="5000">
+</div>
+
 <div class="field"><label>Current savings</label><input id="mSaved" type="number" min="0" placeholder="0"></div>
 <div class="field"><label>Target date</label><input id="mTargetDate" type="date"></div>
 </div>
@@ -255,7 +592,9 @@ const VAPID_PUBLIC_KEY = 'BIhYmBhCSFDrjv5e2J78WwNRwqNgcVGqKBEIsgDj9CCCIFULt_728e
 
 let currentUser = null;
 let profile = null;
-let cache = {budget:null, goal:null, saved:null, targetDate:null, expenses:[], tasks:[]};let viewDate = new Date();
+let selectedTaskId = null;
+let editingTaskId = null;
+let cache = {budget:null, goal:null, saved:null, targetDate:null, expenses:[], tasks:[], categoryLimits:[]};let viewDate = new Date();
 const money=n=>'₱'+Number(n||0).toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2});
 const todayISO=()=>new Date().toISOString().slice(0,10);
 function toast(m){let t=document.getElementById('toast');t.textContent=m;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),2200)}
@@ -302,25 +641,76 @@ async function startApp(user){
 }
 async function loadAll(){
   const uid=currentUser.id;
-  const [b,g,e,t]=await Promise.all([
+  const [b,g,e,t,limits]=await Promise.all([
     sb.from('budgets').select('*').eq('user_id',uid).eq('month',monthKey()).maybeSingle(),
     sb.from('savings_goals').select('*').eq('user_id',uid).maybeSingle(),
     sb.from('expenses').select('*').eq('user_id',uid).order('expense_date',{ascending:false}),
-    sb.from('academic_tasks').select('*').eq('user_id',uid).order('due_date',{ascending:true})
+    sb.from('academic_tasks').select('*').eq('user_id',uid).order('due_date',{ascending:true}),
+    sb.from('category_budgets').select('*').eq('user_id',uid).eq('month',monthKey())
   ]);
   if(b.error) console.warn('budgets:',b.error.message);
   if(g.error) console.warn('savings_goals:',g.error.message);
   if(e.error) console.warn('expenses:',e.error.message);
   if(t.error) console.warn('academic_tasks:',t.error.message);
+  if(limits.error) console.warn('category_budgets:',limits.error.message);
+  cache.categoryLimits=(limits.data||[]).map(x=>({id:x.id,category:x.category,limit:Number(x.limit_amount||0)}));
   cache.budget=b.data?.amount??0;
 cache.goal=g.data?.target_amount??0;
 cache.saved=g.data?.current_amount??0;
+cache.goalName=g.data?.name||'My Savings Goal';
+cache.purpose=g.data?.purpose||'';
 cache.targetDate=g.data?.["target date"]??null;
   cache.expenses=(e.data||[]).map(x=>({id:x.id,amount:Number(x.amount||0),cat:x.category,desc:x.description||x.category,date:x.expense_date}));
-  cache.tasks=(t.data||[]).map(x=>({id:x.id,title:x.title,subject:x.subject||'General',date:x.due_date,priority:x.priority||'Medium',done:!!x.completed}));
+  cache.tasks=(t.data||[]).map(x=>({id:x.id,title:x.title,subject:x.subject||'General',date:x.due_date,time:x.due_time||'',priority:x.priority||'Medium',done:!!x.completed}));
   renderAll();
 }
-function go(id){document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.section===id));renderAll()}
+function toggleModuleDrawer(){
+  const drawer=document.getElementById('moduleDrawer');
+  const backdrop=document.getElementById('moduleDrawerBackdrop');
+  const button=document.querySelector('.hamburger-btn');
+  const opening=!drawer.classList.contains('open');
+  drawer.classList.toggle('open',opening);
+  backdrop.classList.toggle('open',opening);
+  drawer.setAttribute('aria-hidden',String(!opening));
+  if(button)button.setAttribute('aria-expanded',String(opening));
+  document.body.classList.toggle('drawer-open',opening);
+}
+function closeModuleDrawer(){
+  const drawer=document.getElementById('moduleDrawer');
+  const backdrop=document.getElementById('moduleDrawerBackdrop');
+  const button=document.querySelector('.hamburger-btn');
+  if(drawer)drawer.classList.remove('open');
+  if(backdrop)backdrop.classList.remove('open');
+  if(drawer)drawer.setAttribute('aria-hidden','true');
+  if(button)button.setAttribute('aria-expanded','false');
+  document.body.classList.remove('drawer-open');
+}
+function openModule(id){
+  closeModuleDrawer();
+  if(id==='finance') go('finance');
+  else if(id==='dashboard') go('dashboard');
+  else if(id==='tasks') go('tasks');
+  else go(id);
+}
+
+function go(id){
+  closeModuleDrawer();
+  const target=document.getElementById(id);
+  if(!target)return;
+  document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+  target.classList.add('active');
+  document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.section===id));
+  const mobileTarget=({expenses:'finance',budget:'finance',savings:'finance',tasks:'calendar',taskDetail:'calendar'})[id]||id;
+  document.querySelectorAll('.mobile-nav-item').forEach(x=>x.classList.toggle('active',x.dataset.mobile===mobileTarget));
+  renderAll();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function financeTab(tab,button){
+  document.querySelectorAll('.finance-tab').forEach(x=>x.classList.remove('active'));
+  if(button)button.classList.add('active');
+  if(tab==='overview')renderFinance();
+}
+
 
 function monthExpenses(){
   const m = monthKey().slice(0, 7);
@@ -329,9 +719,45 @@ function monthExpenses(){
   );
 }
 
-function renderAll(){renderDashboard();renderExpenses();renderTasks();renderCalendar();renderBudget()}
+function renderAll(){renderDashboard();renderExpenses();renderTasks();renderCalendar();renderBudget();renderFinance();renderAnalytics();renderCategoryLimits()}
 
 
+function renderFinance(){
+  const spent=monthExpenses().reduce((sum,e)=>sum+Number(e.amount||0),0);
+  const budget=Number(cache.budget||0);
+  const remaining=budget-spent;
+  const balance=document.getElementById('financeBalance');
+  if(!balance)return;
+  balance.textContent=money(remaining);
+  document.getElementById('financeSpent').textContent=money(spent);
+  const cats=[
+    {name:'Food',color:'#3478f6'},
+    {name:'Transportation',color:'#f6b844'},
+    {name:'School',color:'#ef737d'},
+    {name:'Personal',color:'#8b6be8'},
+    {name:'Others',color:'#42b6aa'}
+  ];
+  const totals=cats.map(c=>({...c,total:monthExpenses().filter(e=>e.cat===c.name).reduce((sum,e)=>sum+Number(e.amount||0),0)}));
+  const total=totals.reduce((sum,c)=>sum+c.total,0);
+  let start=0;
+  const segments=totals.map(c=>{const from=start;start+=total?c.total/total*360:0;return `${c.color} ${from}deg ${start}deg`;});
+  document.getElementById('financeDonut').style.background=total?`conic-gradient(${segments.join(',')})`:'#e8edf5';
+  document.getElementById('financeLegend').innerHTML=totals.filter(c=>c.total>0).map(c=>`<div class="legend-row"><span class="legend-name"><i class="legend-dot" style="background:${c.color}"></i>${esc(c.name)}</span><b>${money(c.total)}</b></div>`).join('')||'<div class="empty">No expenses this month yet.</div>';
+  const recent=[...monthExpenses()].sort((a,b)=>String(b.date).localeCompare(String(a.date))).slice(0,4);
+  document.getElementById('financeRecent').innerHTML=recent.map(e=>`<div class="row"><div><b>${esc(e.desc||e.cat)}</b><div class="sub">${esc(e.cat)} · ${esc(e.date)}</div></div><b class="red">-${money(e.amount)}</b></div>`).join('')||'<div class="empty">No transactions yet.</div>';
+  const pct=budget?Math.min(100,spent/budget*100):0;
+  document.getElementById('financeBudgetBar').style.width=pct+'%';
+  document.getElementById('financeBudgetHint').textContent=budget?`${Math.round(pct)}% of monthly budget used · ${money(Math.max(0,remaining))} remaining`:'Set a monthly budget to track progress.';
+  document.getElementById('financeSavings').textContent=`${money(cache.saved)} / ${money(cache.goal)}`;
+  document.getElementById('financeSavingsBar').style.width=(cache.goal?Math.min(100,cache.saved/cache.goal*100):0)+'%';
+}
+function renderAnalytics(){
+ const b=document.getElementById('aBudget');if(!b)return;
+ b.textContent=money(cache.budget);document.getElementById('aExpenses').textContent=money(monthExpenses().reduce((sum,e)=>sum+e.amount,0));document.getElementById('aTasks').textContent=cache.tasks.filter(t=>t.done).length;
+ const chart=document.getElementById('analyticsBars');if(chart)chart.innerHTML=document.getElementById('bars')?.innerHTML||'<div class="empty">No spending data yet.</div>';
+ const box=document.getElementById('reportCategoryLimits');
+ if(box){if(!cache.categoryLimits.length)box.innerHTML='<div class="empty">No category spending limits set yet. Add them in My Budget.</div>';else box.innerHTML=cache.categoryLimits.map(item=>{const spent=categorySpent(item.category),pct=item.limit?Math.min(100,spent/item.limit*100):0,over=spent>item.limit;return `<div class="report-limit-row"><div class="category-limit-top"><div><b>${esc(item.category)}</b><div class="sub">${money(spent)} spent of ${money(item.limit)}</div></div><b class="${over?'red':'green'}">${over?'Over by '+money(spent-item.limit):money(Math.max(0,item.limit-spent))+' left'}</b></div><div class="progress"><span class="${over?'limit-over':''}" style="width:${pct}%"></span></div></div>`;}).join('');}
+}
 function renderSpendingChart(){
   const container = document.getElementById('bars');
 
@@ -407,48 +833,117 @@ saveText.textContent=cache.goal
 }
 function renderExpenses(){let q=(expenseSearch?.value||'').toLowerCase(),f=expenseFilter?.value||'',arr=cache.expenses.filter(e=>(!q||String(e.desc).toLowerCase().includes(q)||String(e.cat).toLowerCase().includes(q))&&(!f||e.cat===f));expenseTable.innerHTML=arr.length?`<table class="table"><thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Amount</th><th></th></tr></thead><tbody>${arr.map(e=>`<tr><td>${e.date}</td><td>${esc(e.desc)}</td><td><span class="pill">${esc(e.cat)}</span></td><td class="red"><b>${money(e.amount)}</b></td><td><button class="small-btn" onclick="delExpense('${e.id}')">Delete</button></td></tr>`).join('')}</tbody></table>`:'<div class="empty">No matching expenses.</div>'}
 async function delExpense(id){const {error}=await sb.from('expenses').delete().eq('id',id).eq('user_id',currentUser.id);if(error)return toast(error.message);await loadAll();toast('Expense deleted.')}
-function renderTasks(){let arr=[...cache.tasks].sort((a,b)=>Number(a.done)-Number(b.done)||String(a.date).localeCompare(String(b.date)));taskList.innerHTML=arr.length?`<table class="table"><thead><tr><th>Status</th><th>Task</th><th>Subject</th><th>Due</th><th>Priority</th><th></th></tr></thead><tbody>${arr.map(t=>`<tr><td><input type="checkbox" ${t.done?'checked':''} onchange="toggleTask('${t.id}',${!t.done})"></td><td><b class="${t.done?'sub':''}">${esc(t.title)}</b></td><td>${esc(t.subject)}</td><td>${t.date}</td><td><span class="pill ${String(t.priority).toLowerCase()}">${esc(t.priority)}</span></td><td><button class="small-btn" onclick="delTask('${t.id}')">Delete</button></td></tr>`).join('')}</tbody></table>`:'<div class="empty">No academic tasks yet.</div>'}
+function showTaskDetails(id){
+ const task=cache.tasks.find(t=>String(t.id)===String(id));if(!task)return toast('Task not found.');selectedTaskId=task.id;
+ const set=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value;};
+ set('detailTaskTitle',task.title);set('detailTaskDate',task.date?new Date(task.date+'T00:00:00').toLocaleDateString('en-PH',{month:'long',day:'numeric',year:'numeric'}):'—');
+ set('detailTaskTime',task.time?new Date('2000-01-01T'+task.time).toLocaleTimeString('en-PH',{hour:'numeric',minute:'2-digit'}):'No time set');
+ set('detailTaskSubject',task.subject||'General');set('detailTaskPriority',task.priority||'Medium');set('detailTaskDescription',task.description||'No description provided.');
+ const status=document.getElementById('detailTaskStatus');status.textContent=task.done?'Completed':'Pending';status.className='pill '+(task.done?'low':String(task.priority||'Medium').toLowerCase());
+ const btn=document.getElementById('completeTaskButton');btn.textContent=task.done?'Mark as Pending':'Mark as Completed';btn.style.background=task.done?'#64748b':'#42b883';go('taskDetail');
+}
+function editCurrentTask(){const task=cache.tasks.find(t=>String(t.id)===String(selectedTaskId));if(!task)return toast('Choose a task first.');editingTaskId=task.id;openModal('task');}
+async function completeCurrentTask(){const task=cache.tasks.find(t=>String(t.id)===String(selectedTaskId));if(!task)return;await toggleTask(task.id,!task.done);showTaskDetails(task.id);}
+function renderTasks(){let arr=[...cache.tasks].sort((a,b)=>Number(a.done)-Number(b.done)||String(a.date).localeCompare(String(b.date)));taskList.innerHTML=arr.length?`<table class="table"><thead><tr><th>Status</th><th>Task</th><th>Subject</th><th>Due</th><th>Time</th><th>Priority</th><th></th></tr></thead><tbody>${arr.map(t=>`<tr><td><input type="checkbox" ${t.done?'checked':''} onchange="toggleTask('${t.id}',${!t.done})"></td><td><button class="task-title-button" onclick="showTaskDetails('${t.id}')">${esc(t.title)}</button></td><td>${esc(t.subject)}</td><td>${t.date}</td><td>${t.time?esc(new Date('2000-01-01T'+t.time).toLocaleTimeString('en-PH',{hour:'numeric',minute:'2-digit'})):'—'}</td><td><span class="pill ${String(t.priority).toLowerCase()}">${esc(t.priority)}</span></td><td><button class="small-btn" onclick="delTask('${t.id}')">Delete</button></td></tr>`).join('')}</tbody></table>`:'<div class="empty">No academic tasks yet.</div>'}
 async function toggleTask(id,completed){const {error}=await sb.from('academic_tasks').update({completed}).eq('id',id).eq('user_id',currentUser.id);if(error)return toast(error.message);await loadAll();toast(completed?'Task completed!':'Task reopened.')}
 async function delTask(id){const {error}=await sb.from('academic_tasks').delete().eq('id',id).eq('user_id',currentUser.id);if(error)return toast(error.message);await loadAll();toast('Task deleted.')}
-function renderCalendar(){let y=viewDate.getFullYear(),m=viewDate.getMonth(),first=new Date(y,m,1),last=new Date(y,m+1,0),start=first.getDay(),total=last.getDate(),prev=new Date(y,m,0).getDate();monthTitle.textContent=first.toLocaleDateString('en-US',{month:'long',year:'numeric'});let cells='';for(let i=0;i<42;i++){let n=i-start+1,day=n,muted=false,iso;if(n<1){day=prev+n;muted=true;iso=new Date(y,m-1,day).toISOString().slice(0,10)}else if(n>total){day=n-total;muted=true;iso=new Date(y,m+1,day).toISOString().slice(0,10)}else{iso=new Date(y,m,day).toISOString().slice(0,10)}let events=cache.tasks.filter(t=>t.date===iso);cells+=`<div class="cal-cell ${muted?'muted':''}"><div class="date-num">${day}</div>${events.map(e=>`<div class="event" title="${esc(e.title)}">${esc(e.title)}</div>`).join('')}</div>`}calendarGrid.innerHTML=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(x=>`<div style="padding:8px;background:#f8f9fc;border-right:1px solid var(--line);font-size:11px;font-weight:700;color:var(--muted)">${x}</div>`).join('')+cells}
+function renderCalendar(){
+  let y=viewDate.getFullYear(),m=viewDate.getMonth(),first=new Date(y,m,1),last=new Date(y,m+1,0),start=first.getDay(),total=last.getDate(),prev=new Date(y,m,0).getDate();
+  monthTitle.textContent=first.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+  let cells='';
+  for(let i=0;i<42;i++){
+    let n=i-start+1,day=n,muted=false,iso;
+    if(n<1){day=prev+n;muted=true;iso=new Date(y,m-1,day).toISOString().slice(0,10)}
+    else if(n>total){day=n-total;muted=true;iso=new Date(y,m+1,day).toISOString().slice(0,10)}
+    else{iso=new Date(y,m,day).toISOString().slice(0,10)}
+    let events=cache.tasks.filter(t=>t.date===iso);
+    const isToday=iso===todayISO();
+    cells+=`<div class="cal-cell ${muted?'muted':''} ${isToday?'is-today':''}"><div class="date-num">${day}</div>${events.slice(0,2).map(e=>`<div class="event ${e.done?'event-done':''}" title="${esc(e.title)}${e.time?' · '+esc(e.time):''}">${e.time?esc(e.time)+' ':''}${esc(e.title)}</div>`).join('')}${events.length>2?`<small class="sub">+${events.length-2} more</small>`:''}</div>`;
+  }
+  calendarGrid.innerHTML=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(x=>`<div class="calendar-weekday">${x}</div>`).join('')+cells;
+  const monthKeyText=`${y}-${String(m+1).padStart(2,'0')}`;
+  const monthTasks=[...cache.tasks].filter(t=>String(t.date||'').startsWith(monthKeyText)).sort((a,b)=>String(a.date).localeCompare(String(b.date))||Number(a.done)-Number(b.done));
+  const list=document.getElementById('calendarTaskList');
+  const count=document.getElementById('calendarTaskCount');
+  if(count)count.textContent=`${monthTasks.length} task${monthTasks.length===1?'':'s'}`;
+  if(list)list.innerHTML=monthTasks.length?monthTasks.map(t=>`<div class="row calendar-task-row"><div class="calendar-task-dot ${t.done?'done':''}"></div><div class="calendar-task-info"><b class="${t.done?'task-completed':''}">${esc(t.title)}</b><div class="sub">${new Date(t.date+'T00:00:00').toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'})}${t.time?' · '+esc(new Date('2000-01-01T'+t.time).toLocaleTimeString('en-PH',{hour:'numeric',minute:'2-digit'})):''} · ${esc(t.subject)}</div></div><span class="pill ${t.done?'low':String(t.priority).toLowerCase()}">${t.done?'Completed':esc(t.priority)}</span><label class="calendar-task-check"><input type="checkbox" ${t.done?'checked':''} onchange="toggleTask('${t.id}',${!t.done})" aria-label="Mark ${esc(t.title)} completed"></label></div>`).join(''):'<div class="empty">No tasks scheduled for this month. Add a task and it will appear here.</div>';
+}
 function changeMonth(n){viewDate.setMonth(viewDate.getMonth()+n);renderCalendar()}
-function renderBudget(){let spent=monthExpenses().reduce((a,e)=>a+e.amount,0),p=cache.budget?Math.min(100,spent/cache.budget*100):0;bBudget.textContent=money(cache.budget);bSpent.textContent=money(spent);bRemain.textContent=money(Number(cache.budget||0)-spent);budgetPct.textContent=Math.round(p)+'%';budgetBar.style.width=p+'%';budgetHint.textContent=p>=100?'You have reached your budget limit.':`${Math.round(p)}% of your monthly budget has been used.`;budgetSaving.textContent=`${money(cache.saved)} / ${money(cache.goal)}`;budgetSaveBar.style.width=(cache.goal?Math.min(100,cache.saved/cache.goal*100):0)+'%'}
-function openModal(type){modal.classList.remove('hidden');expenseForm.classList.toggle('hidden',type!=='expense');taskForm.classList.toggle('hidden',type!=='task');budgetForm.classList.toggle('hidden',type!=='budget');modalTitle.textContent=type==='expense'?'Add Expense':type==='task'?'Add Academic Task':'Budget & Savings';eDate.value=todayISO();tDate.value=todayISO();if(type==='budget'){
-  mBudget.value=cache.budget||0;
-  mGoal.value=cache.goal||0;
-  mSaved.value=cache.saved||0;
-  mTargetDate.value=cache.targetDate||'';
-}}
-	
-function closeModal(){modal.classList.add('hidden')}
+function categorySpent(category){return monthExpenses().filter(e=>e.cat===category).reduce((sum,e)=>sum+Number(e.amount||0),0)}
+function renderCategoryLimits(){
+  const box=document.getElementById('categoryLimitList');if(!box)return;
+  if(!cache.categoryLimits.length){box.innerHTML='<div class="empty">No category limits yet. Choose a category and set your monthly maximum above.</div>';return;}
+  box.innerHTML=cache.categoryLimits.map(item=>{
+    const spent=categorySpent(item.category),remaining=Math.max(0,item.limit-spent),pct=item.limit?Math.min(100,spent/item.limit*100):0,over=spent>item.limit;
+    return `<div class="category-limit-item"><div class="category-limit-top"><div><b>${esc(item.category)}</b><div class="sub">${money(spent)} spent of ${money(item.limit)}</div></div><div class="category-limit-right"><b class="${over?'red':'green'}">${over?'Over limit by '+money(spent-item.limit):money(remaining)+' left'}</b><button class="small-btn" onclick="deleteCategoryLimit('${item.id}')">Remove</button></div></div><div class="progress"><span class="${over?'limit-over':''}" style="width:${pct}%"></span></div></div>`;
+  }).join('');
+}
+async function saveCategoryLimit(){
+  if(!currentUser)return toast('Please sign in first.');
+  const category=document.getElementById('limitCategory').value;
+  const limit=Number(document.getElementById('limitAmount').value);
+  if(!Number.isFinite(limit)||limit<=0)return toast('Enter a limit greater than zero.');
+  const {error}=await sb.from('category_budgets').upsert({user_id:currentUser.id,month:monthKey(),category,limit_amount:limit},{onConflict:'user_id,month,category'});
+  if(error){console.error('Category limit save failed:',error);return toast('Could not save category limit. Check the SQL setup.');}
+  document.getElementById('limitAmount').value='';
+  await loadAll();toast(`${category} limit saved.`);
+}
+async function deleteCategoryLimit(id){
+  const {error}=await sb.from('category_budgets').delete().eq('id',id).eq('user_id',currentUser.id);
+  if(error)return toast(error.message);
+  await loadAll();toast('Category limit removed.');
+}
+
+function renderBudget(){
+ const spent=monthExpenses().reduce((a,e)=>a+e.amount,0),p=cache.budget?Math.min(100,spent/cache.budget*100):0;
+ bBudget.textContent=money(cache.budget);bSpent.textContent=money(spent);bRemain.textContent=money(Number(cache.budget||0)-spent);
+ budgetPct.textContent=Math.round(p)+'%';budgetBar.style.width=p+'%';budgetHint.textContent=p>=100?'You have reached your budget limit.':`${Math.round(p)}% of your monthly budget has been used.`;
+ const pct=cache.goal?Math.min(100,Math.round(cache.saved/cache.goal*100)):0;
+ const set=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
+ set('savingsGoalName',cache.goalName||'My Savings Goal');set('savingsGoalTarget','Target: '+money(cache.goal));set('savingsPurpose',cache.purpose||'Purpose not set');set('savingsCurrent',`${money(cache.saved)} / ${money(cache.goal)}`);set('savingsPercent',pct+'%');set('savingsSavedSummary',money(cache.saved));set('savingsNeeded',money(Math.max(0,Number(cache.goal||0)-Number(cache.saved||0))));
+ set('savingsDueDate',cache.targetDate?'Target date: '+new Date(cache.targetDate+'T00:00:00').toLocaleDateString('en-PH',{month:'long',day:'numeric',year:'numeric'}):'No target date set');
+ const bar=document.getElementById('savingsProgressBar');if(bar)bar.style.width=pct+'%';
+}
+function openModal(type){
+  modal.classList.remove('hidden');
+  expenseForm.classList.toggle('hidden',type!=='expense');
+  taskForm.classList.toggle('hidden',type!=='task');
+  budgetForm.classList.toggle('hidden',type!=='budget');
+  savingsForm.classList.toggle('hidden',type!=='savings');
+  modalTitle.textContent=type==='expense'?'Add Expense':type==='task'?(editingTaskId?'Edit Academic Task':'Add Academic Task'):type==='savings'?'Savings Goal':'My Budget';
+  eDate.value=todayISO();if(!editingTaskId)tDate.value=todayISO();if(document.getElementById('tTime')&&!editingTaskId)tTime.value='';
+  if(type==='budget')mBudget.value=cache.budget||0;
+  if(type==='savings'){sGoalName.value=cache.goalName||'My Savings Goal';sPurpose.value=cache.purpose||'';sGoalTarget.value=cache.goal||0;sGoalCurrent.value=cache.saved||0;sGoalDate.value=cache.targetDate||'';}
+  if(type==='task'&&editingTaskId){const t=cache.tasks.find(x=>String(x.id)===String(editingTaskId));if(t){tTitle.value=t.title;tSubject.value=t.subject;tDate.value=t.date;tTime.value=t.time||'';tPriority.value=t.priority||'Medium';}}
+}
+function closeModal(){modal.classList.add('hidden');editingTaskId=null;}
 async function saveModal(){
   if(!currentUser)return;
   if(!expenseForm.classList.contains('hidden')){
     let amount=Number(eAmount.value),desc=eDesc.value.trim();if(!amount||amount<0)return toast('Enter a valid amount.');
-    const {error}=await sb.from('expenses').insert({user_id:currentUser.id,amount,category:eCat.value,description:desc||eCat.value,expense_date:eDate.value||todayISO()});if(error)return toast(error.message);toast('Expense saved.');
+    const category=eCat.value,limit=cache.categoryLimits.find(x=>x.category===category);
+    if(limit){const spent=categorySpent(category);if(spent+amount>limit.limit){return toast(`${category} limit reached. You have ${money(Math.max(0,limit.limit-spent))} remaining; this expense would exceed your limit.`);}}
+    const {error}=await sb.from('expenses').insert({user_id:currentUser.id,amount,category,description:desc||category,expense_date:eDate.value||todayISO()});if(error)return toast(error.message);toast('Expense saved.');
   } else if(!taskForm.classList.contains('hidden')){
     if(!tTitle.value.trim()||!tDate.value)return toast('Enter a title and due date.');
-    const {error}=await sb.from('academic_tasks').insert({user_id:currentUser.id,title:tTitle.value.trim(),subject:tSubject.value.trim()||'General',due_date:tDate.value,priority:tPriority.value,completed:false});if(error)return toast(error.message);toast('Academic task added.');
+    const taskPayload={title:tTitle.value.trim(),subject:tSubject.value.trim()||'General',due_date:tDate.value,due_time:tTime.value||null,priority:tPriority.value};
+    let result;
+    if(editingTaskId)result=await sb.from('academic_tasks').update(taskPayload).eq('id',editingTaskId).eq('user_id',currentUser.id);
+    else result=await sb.from('academic_tasks').insert({...taskPayload,user_id:currentUser.id,completed:false});
+    if(result.error)return toast(result.error.message);
+    editingTaskId=null;toast('Academic task saved.');
+  } else if(!savingsForm.classList.contains('hidden')){
+    const payload={name:sGoalName.value.trim()||'My Savings Goal',purpose:sPurpose.value.trim()||null,target_amount:Number(sGoalTarget.value)||0,current_amount:Number(sGoalCurrent.value)||0,"target date":sGoalDate.value||null,user_id:currentUser.id};
+    const {data:existing}=await sb.from('savings_goals').select('id').eq('user_id',currentUser.id).maybeSingle();
+    let result;
+    if(existing?.id){const {user_id,...updates}=payload;result=await sb.from('savings_goals').update(updates).eq('id',existing.id).eq('user_id',currentUser.id);}
+    else result=await sb.from('savings_goals').insert(payload);
+    if(result.error)return toast(result.error.message);
+    toast('Savings goal updated.');
   } else {
     const {error:bErr}=await sb.from('budgets').upsert({user_id:currentUser.id,month:monthKey(),amount:Number(mBudget.value)||0},{onConflict:'user_id,month'});if(bErr)return toast(bErr.message);
-    const {data:existing}=await sb.from('savings_goals').select('id').eq('user_id',currentUser.id).maybeSingle();
-let sErr;
-if(existing?.id)
-sErr=(await sb.from('savings_goals').update({
-  target_amount:Number(mGoal.value)||0,
-  current_amount:Number(mSaved.value)||0,
-  "target date":mTargetDate.value||null
-}).eq('id',existing.id).eq('user_id',currentUser.id)).error;
-else
-  sErr=(await sb.from('savings_goals').insert({
-  user_id:currentUser.id,
-  name:'Savings Goal',
-  target_amount:Number(mGoal.value)||0,
-  current_amount:Number(mSaved.value)||0,
-  "target date":mTargetDate.value||null
-})).error;
-if(sErr)return toast(sErr.message);
-toast('Budget updated.');  }
+    toast('Budget updated.');
+  }
   closeModal();await loadAll();
 }
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
@@ -466,16 +961,12 @@ function base64UrlToUint8Array(base64String) {
 
 
 function setNotificationToggle(enabled) {
-  const button = document.getElementById('enableNotificationsBtn');
-  if (!button) return;
-
-  button.classList.toggle('is-on', enabled);
-  button.classList.toggle('is-off', !enabled);
-  button.setAttribute('aria-checked', String(enabled));
-  button.setAttribute(
-    'aria-label',
-    enabled ? 'Notifications on' : 'Notifications off'
-  );
+  const settingsButton = document.getElementById('settingsNotificationBtn');
+  if (!settingsButton) return;
+  settingsButton.classList.toggle('is-on', enabled);
+  settingsButton.classList.toggle('is-off', !enabled);
+  settingsButton.setAttribute('aria-checked', String(enabled));
+  settingsButton.setAttribute('aria-label', enabled ? 'Notifications on' : 'Notifications off');
 }
 
 async function syncNotificationToggle() {
@@ -575,12 +1066,13 @@ async function enablePushNotifications() {
   }
 }
 
-async function togglePushNotifications() {
-  const button = document.getElementById('enableNotificationsBtn');
-  if (!button || button.disabled) return;
+async function togglePushNotifications(sourceButton) {
+  const settingsButton = document.getElementById('settingsNotificationBtn');
+  sourceButton = sourceButton || settingsButton;
+  if (!sourceButton || sourceButton.disabled) return;
 
-  const currentlyOn = button.getAttribute('aria-checked') === 'true';
-  button.disabled = true;
+  const currentlyOn = sourceButton.getAttribute('aria-checked') === 'true';
+  if(settingsButton) settingsButton.disabled=true;
 
   try {
     if (!currentlyOn) {
@@ -622,11 +1114,42 @@ async function togglePushNotifications() {
     toast(error.message || 'Could not change notification settings.');
     await syncNotificationToggle();
   } finally {
-    button.disabled = false;
+    if(settingsButton) settingsButton.disabled=false;
   }
 }
 
 (async()=>{const {data}=await sb.auth.getSession();if(data.session)await startApp(data.session.user);sb.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_OUT'){currentUser=null;auth.classList.remove('hidden');app.classList.add('hidden')}})})()
+
+/* Theme toggle: independent from notification settings */
+function applyTheme(theme, save=true){
+  const isDark = theme === 'dark';
+  document.body.classList.toggle('dark-mode', isDark);
+  document.documentElement.classList.remove('theme-dark-start');
+  const button = document.getElementById('themeToggle');
+  const heading = document.querySelector('#settings .card .row b');
+  const description = document.querySelector('#settings .card .row .sub');
+  if(button){
+    button.textContent = isDark ? 'Dark Mode' : 'Light Mode';
+    button.setAttribute('aria-pressed', String(isDark));
+    button.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+  }
+  if(heading) heading.textContent = isDark ? 'Dark Mode' : 'Light Mode';
+  if(description) description.textContent = isDark ? 'Use the dark interface for your planner.' : 'Use the light interface for your planner.';
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.setAttribute('content', isDark ? '#0b1220' : '#3478f6');
+  if(save){ try { localStorage.setItem('studentPlannerTheme', isDark ? 'dark' : 'light'); } catch(e) {} }
+}
+function toggleTheme(){
+  const isDark = document.body.classList.contains('dark-mode');
+  applyTheme(isDark ? 'light' : 'dark');
+}
+(function initTheme(){
+  let theme = 'light';
+  try { theme = localStorage.getItem('studentPlannerTheme') || 'light'; } catch(e) {}
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded',()=>applyTheme(theme,false),{once:true});
+  else applyTheme(theme,false);
+})();
+
 </script>
 	
 <script>
