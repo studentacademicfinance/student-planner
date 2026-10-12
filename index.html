@@ -284,6 +284,37 @@ body.dark-mode .calendar-task-check input{accent-color:#78aaff}
 body.dark-mode #savings .goal-purpose{background:#1b2b48;color:#a9c9ff}
 @media(max-width:650px){#savings .savings-hero{grid-template-columns:minmax(0,1fr)}#savings .savings-history-item{align-items:flex-start}#savings .savings-history-item>.green{text-align:right;flex-shrink:0}}
 
+
+/* Unified Academic Calendar & Tasks + mobile-friendly horizontal calendar */
+.calendar-scroll{width:100%;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y;border-radius:10px}
+.calendar-scroll .cal-grid{min-width:700px}
+.calendar-scroll .cal-cell{min-width:0}
+.calendar-scroll .event{display:block;width:100%;border:0;text-align:left;cursor:pointer;font:inherit;font-size:10px;padding:4px 5px;border-radius:6px;background:#eeedff;color:#554de6;margin-top:6px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.calendar-scroll .event.event-done{background:#e7f7ed;color:#248052;text-decoration:line-through}
+.calendar-scroll .more-events{display:block;border:0;background:transparent;padding:4px 0;cursor:pointer;text-align:left}
+.calendar-hint{margin:12px 0 0;font-size:11px}
+.calendar-task-title{display:block;padding:0;border:0;background:transparent;text-align:left;cursor:pointer;font-weight:700;color:var(--text);max-width:100%;overflow-wrap:anywhere}
+.calendar-task-title:hover{text-decoration:underline;color:var(--brand)}
+.calendar-edit-btn{flex-shrink:0}
+.task-details-box{max-height:min(88vh,760px);overflow-y:auto}
+.task-detail-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.task-detail-block{padding:12px 0;border-bottom:1px solid var(--line)}
+.task-detail-label{font-size:11px;color:var(--muted);margin-bottom:5px}
+.task-detail-value{font-size:14px;overflow-wrap:anywhere}
+.task-detail-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:18px}
+@media(max-width:650px){
+ .calendar-scroll{margin-right:-2px;width:100%}
+ .calendar-scroll .cal-grid{min-width:700px}
+ .calendar-scroll .cal-cell{min-height:78px;padding:5px}
+ .calendar-scroll .event{font-size:10px;padding:4px 5px}
+ .calendar-head h3{font-size:15px}
+ .calendar-task-row{align-items:flex-start;flex-wrap:wrap}
+ .calendar-task-info{flex-basis:calc(100% - 28px)}
+ .calendar-task-check{margin-left:17px}
+ .task-detail-actions>*{flex:1 1 auto}
+ .task-details-box{padding:16px;max-height:85vh}
+}
+
 </style>
 <script>
 (function(){
@@ -358,11 +389,6 @@ body.dark-mode #savings .goal-purpose{background:#1b2b48;color:#a9c9ff}
     ₱ <span>Expenses</span>
   </div>
 
-  <div class="nav" data-section="tasks"
-       onclick="go('tasks')">
-    ✓ <span>Academic Tasks</span>
-  </div>
-
   <div class="nav" data-section="calendar"
        onclick="go('calendar')">
     ▦ <span>Academic Calendar</span>
@@ -414,7 +440,7 @@ body.dark-mode #savings .goal-purpose{background:#1b2b48;color:#a9c9ff}
 <div class="card"><div class="card-head"><h3>Savings goal</h3><span id="savePct" class="pill">0%</span></div><div class="stat-value" id="saveAmount">₱0 / ₱0</div><div class="progress"><span id="saveBar" style="width:0%"></span></div><p class="sub" id="saveText">Set a savings goal to start tracking.</p><button class="action" style="margin-top:14px" onclick="openModal('budget')">Manage budget</button></div>
 </div>
 <div class="grid two" style="margin-top:18px">
-<div class="card"><div class="card-head"><h3>Upcoming academic tasks</h3><button class="small-btn" onclick="go('tasks')">Manage</button></div><div id="dashTasks" class="list"></div></div>
+<div class="card"><div class="card-head"><h3>Upcoming academic tasks</h3><button class="small-btn" onclick="go('calendar')">Manage</button></div><div id="dashTasks" class="list"></div></div>
 <div class="card"><div class="card-head"><h3>Recent expenses</h3><button class="small-btn" onclick="go('expenses')">Manage</button></div><div id="dashExpenses" class="list"></div></div>
 </div>
 </section>
@@ -424,14 +450,9 @@ body.dark-mode #savings .goal-purpose{background:#1b2b48;color:#a9c9ff}
 <div class="card"><div class="toolbar"><input id="expenseSearch" oninput="renderExpenses()" placeholder="Search expenses..."><select id="expenseFilter" onchange="renderExpenses()"><option value="">All categories</option><option>Food</option><option>Transportation</option><option>School</option><option>Personal</option><option>Others</option></select></div><div id="expenseTable" style="overflow:auto;margin-top:16px"></div></div>
 </section>
 
-<section id="tasks" class="section">
-<div class="page-title"><div><h1>Academic Tasks</h1><p>Keep assignments, deadlines, and school requirements organized.</p></div><button class="action" onclick="openModal('task')">+ Add Task</button></div>
-<div class="card"><div id="taskList"></div></div>
-</section>
-
 <section id="calendar" class="section">
-<div class="page-title"><div><h1>Academic Calendar</h1><p>View your deadlines and the tasks scheduled for each date.</p></div><button class="action" onclick="openModal('task')">+ Add Task</button></div>
-<div class="card"><div class="calendar-head"><button class="small-btn" onclick="changeMonth(-1)">←</button><h3 id="monthTitle"></h3><button class="small-btn" onclick="changeMonth(1)">→</button></div><div class="cal-grid" id="calendarGrid"></div></div>
+<div class="page-title"><div><h1>Academic Calendar & Tasks</h1><p>View your schedule, open any task to see its details, and edit it without leaving this page.</p></div><button class="action" onclick="openModal('task')">+ Add Task</button></div>
+<div class="card calendar-card"><div class="calendar-head"><button class="small-btn" onclick="changeMonth(-1)" aria-label="Previous month">←</button><h3 id="monthTitle"></h3><button class="small-btn" onclick="changeMonth(1)" aria-label="Next month">→</button></div><div class="calendar-scroll" aria-label="Scrollable monthly calendar"><div class="cal-grid" id="calendarGrid"></div></div><p class="sub calendar-hint">Tip: tap a task in the calendar or task list to view its details.</p></div>
 <div class="card" style="margin-top:16px"><div class="card-head"><h3>Scheduled Tasks</h3><span class="pill" id="calendarTaskCount">0 tasks</span></div><div id="calendarTaskList" class="list"></div></div>
 </section>
 
@@ -455,7 +476,7 @@ body.dark-mode #savings .goal-purpose{background:#1b2b48;color:#a9c9ff}
   </div>
   <div class="card savings-history-card"><div class="card-head"><h3>Recent Savings</h3></div><div id="savingsHistoryList" class="savings-history-list"><p class="sub">Loading savings history...</p></div></div>
 </section>
-<section id="taskDetail" class="section"><div class="page-title"><div><button class="small-btn" onclick="go('tasks')">← Back to Tasks</button><h1 style="margin-top:14px">Task Details</h1></div><button class="small-btn" onclick="editCurrentTask()">✎ Edit</button></div><div class="card"><div class="task-detail-header"><h2 id="detailTaskTitle" style="margin:0 0 8px;font-size:21px">Task title</h2><span id="detailTaskStatus" class="pill medium">Pending</span></div><div class="task-detail-block"><div class="task-detail-label">Date</div><div class="task-detail-value" id="detailTaskDate">—</div></div><div class="task-detail-block"><div class="task-detail-label">Time</div><div class="task-detail-value" id="detailTaskTime">—</div></div><div class="task-detail-block"><div class="task-detail-label">Subject</div><div class="task-detail-value" id="detailTaskSubject">—</div></div><div class="task-detail-block"><div class="task-detail-label">Priority</div><div class="task-detail-value" id="detailTaskPriority">—</div></div><div class="task-detail-block"><div class="task-detail-label">Description</div><div class="task-detail-value" id="detailTaskDescription">No description provided.</div></div><button class="action" id="completeTaskButton" style="width:100%;margin-top:20px;background:#42b883" onclick="completeCurrentTask()">Mark as Completed</button></div></section>
+
 <section id="modules" class="section">
   <div class="page-title"><div><h1>Choose a Module</h1><p>Select what you want to manage.</p></div></div>
   <div class="module-grid">
@@ -623,6 +644,12 @@ body.dark-mode #savings .goal-purpose{background:#1b2b48;color:#a9c9ff}
 </div>
 <div class="form-actions"><button class="secondary" onclick="closeModal()">Cancel</button><button class="action" onclick="saveModal()">Save</button></div>
 </div></div>
+<div id="taskDetailsOverlay" class="modal hidden" onclick="if(event.target===this)closeTaskDetails()"><div class="modal-box task-details-box">
+<div class="modal-head"><h2 style="margin:0">Task Details</h2><button class="close" onclick="closeTaskDetails()" aria-label="Close task details">✕</button></div>
+<div class="task-detail-header" style="margin-top:18px"><h2 id="detailTaskTitle" style="margin:0 0 8px;font-size:21px">Task title</h2><span id="detailTaskStatus" class="pill medium">Pending</span></div>
+<div class="task-detail-block"><div class="task-detail-label">Date</div><div class="task-detail-value" id="detailTaskDate">—</div></div><div class="task-detail-block"><div class="task-detail-label">Time</div><div class="task-detail-value" id="detailTaskTime">—</div></div><div class="task-detail-block"><div class="task-detail-label">Subject</div><div class="task-detail-value" id="detailTaskSubject">—</div></div><div class="task-detail-block"><div class="task-detail-label">Priority</div><div class="task-detail-value" id="detailTaskPriority">—</div></div><div class="task-detail-block"><div class="task-detail-label">Description</div><div class="task-detail-value" id="detailTaskDescription">No description provided.</div></div>
+<div class="task-detail-actions"><button class="secondary" onclick="closeTaskDetails()">Close</button><button class="secondary" onclick="editCurrentTask()">✎ Edit Task</button><button class="action" id="completeTaskButton" style="background:#42b883" onclick="completeCurrentTask()">Mark as Completed</button></div>
+</div></div>
 <div id="toast" class="toast hidden"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -737,18 +764,19 @@ function openModule(id){
   closeModuleDrawer();
   if(id==='finance') go('finance');
   else if(id==='dashboard') go('dashboard');
-  else if(id==='tasks') go('tasks');
+  else if(id==='tasks') go('calendar');
   else go(id);
 }
 
 function go(id){
+  if(id==='tasks'||id==='taskDetail')id='calendar';
   closeModuleDrawer();
   const target=document.getElementById(id);
   if(!target)return;
   document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
   target.classList.add('active');
   document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.section===id));
-  const mobileTarget=({expenses:'finance',budget:'finance',savings:'finance',tasks:'calendar',taskDetail:'calendar'})[id]||id;
+  const mobileTarget=({expenses:'finance',budget:'finance',savings:'finance'})[id]||id;
   document.querySelectorAll('.mobile-nav-item').forEach(x=>x.classList.toggle('active',x.dataset.mobile===mobileTarget));
   renderAll();
   window.scrollTo({top:0,behavior:'smooth'});
@@ -767,7 +795,7 @@ function monthExpenses(){
   );
 }
 
-function renderAll(){renderDashboard();renderExpenses();renderTasks();renderCalendar();renderBudget();renderSavingsHistory();renderFinance();renderAnalytics();renderCategoryLimits()}
+function renderAll(){renderDashboard();renderExpenses();renderCalendar();renderBudget();renderSavingsHistory();renderFinance();renderAnalytics();renderCategoryLimits()}
 
 
 function renderFinance(){
@@ -888,9 +916,11 @@ function showTaskDetails(id){
  set('detailTaskTime',task.time?new Date('2000-01-01T'+task.time).toLocaleTimeString('en-PH',{hour:'numeric',minute:'2-digit'}):'No time set');
  set('detailTaskSubject',task.subject||'General');set('detailTaskPriority',task.priority||'Medium');set('detailTaskDescription',task.description||'No description provided.');
  const status=document.getElementById('detailTaskStatus');status.textContent=task.done?'Completed':'Pending';status.className='pill '+(task.done?'low':String(task.priority||'Medium').toLowerCase());
- const btn=document.getElementById('completeTaskButton');btn.textContent=task.done?'Mark as Pending':'Mark as Completed';btn.style.background=task.done?'#64748b':'#42b883';go('taskDetail');
+ const btn=document.getElementById('completeTaskButton');btn.textContent=task.done?'Mark as Pending':'Mark as Completed';btn.style.background=task.done?'#64748b':'#42b883';
+ document.getElementById('taskDetailsOverlay').classList.remove('hidden');
 }
-function editCurrentTask(){const task=cache.tasks.find(t=>String(t.id)===String(selectedTaskId));if(!task)return toast('Choose a task first.');editingTaskId=task.id;openModal('task');}
+function closeTaskDetails(){const overlay=document.getElementById('taskDetailsOverlay');if(overlay)overlay.classList.add('hidden');}
+function editCurrentTask(){const task=cache.tasks.find(t=>String(t.id)===String(selectedTaskId));if(!task)return toast('Choose a task first.');closeTaskDetails();editingTaskId=task.id;openModal('task');}
 async function completeCurrentTask(){const task=cache.tasks.find(t=>String(t.id)===String(selectedTaskId));if(!task)return;await toggleTask(task.id,!task.done);showTaskDetails(task.id);}
 function renderTasks(){let arr=[...cache.tasks].sort((a,b)=>Number(a.done)-Number(b.done)||String(a.date).localeCompare(String(b.date)));taskList.innerHTML=arr.length?`<table class="table"><thead><tr><th>Status</th><th>Task</th><th>Subject</th><th>Due</th><th>Time</th><th>Priority</th><th></th></tr></thead><tbody>${arr.map(t=>`<tr><td><input type="checkbox" ${t.done?'checked':''} onchange="toggleTask('${t.id}',${!t.done})"></td><td><button class="task-title-button" onclick="showTaskDetails('${t.id}')">${esc(t.title)}</button></td><td>${esc(t.subject)}</td><td>${t.date}</td><td>${t.time?esc(new Date('2000-01-01T'+t.time).toLocaleTimeString('en-PH',{hour:'numeric',minute:'2-digit'})):'—'}</td><td><span class="pill ${String(t.priority).toLowerCase()}">${esc(t.priority)}</span></td><td><button class="small-btn" onclick="delTask('${t.id}')">Delete</button></td></tr>`).join('')}</tbody></table>`:'<div class="empty">No academic tasks yet.</div>'}
 async function toggleTask(id,completed){const {error}=await sb.from('academic_tasks').update({completed}).eq('id',id).eq('user_id',currentUser.id);if(error)return toast(error.message);await loadAll();toast(completed?'Task completed!':'Task reopened.')}
@@ -906,7 +936,7 @@ function renderCalendar(){
     else{iso=new Date(y,m,day).toISOString().slice(0,10)}
     let events=cache.tasks.filter(t=>t.date===iso);
     const isToday=iso===todayISO();
-    cells+=`<div class="cal-cell ${muted?'muted':''} ${isToday?'is-today':''}"><div class="date-num">${day}</div>${events.slice(0,2).map(e=>`<div class="event ${e.done?'event-done':''}" title="${esc(e.title)}${e.time?' · '+esc(e.time):''}">${e.time?esc(e.time)+' ':''}${esc(e.title)}</div>`).join('')}${events.length>2?`<small class="sub">+${events.length-2} more</small>`:''}</div>`;
+    cells+=`<div class="cal-cell ${muted?'muted':''} ${isToday?'is-today':''}"><div class="date-num">${day}</div>${events.slice(0,2).map(e=>`<button type="button" class="event ${e.done?'event-done':''}" onclick="showTaskDetails('${e.id}')" title="Open task: ${esc(e.title)}" aria-label="Open task ${esc(e.title)}">${e.time?esc(e.time)+' ':''}${esc(e.title)}</button>`).join('')}${events.length>2?`<button type="button" class="more-events sub" onclick="document.getElementById('calendarTaskList').scrollIntoView({behavior:'smooth',block:'start'})">+${events.length-2} more</button>`:''}</div>`;
   }
   calendarGrid.innerHTML=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(x=>`<div class="calendar-weekday">${x}</div>`).join('')+cells;
   const monthKeyText=`${y}-${String(m+1).padStart(2,'0')}`;
@@ -914,7 +944,7 @@ function renderCalendar(){
   const list=document.getElementById('calendarTaskList');
   const count=document.getElementById('calendarTaskCount');
   if(count)count.textContent=`${monthTasks.length} task${monthTasks.length===1?'':'s'}`;
-  if(list)list.innerHTML=monthTasks.length?monthTasks.map(t=>`<div class="row calendar-task-row"><div class="calendar-task-dot ${t.done?'done':''}"></div><div class="calendar-task-info"><b class="${t.done?'task-completed':''}">${esc(t.title)}</b><div class="sub">${new Date(t.date+'T00:00:00').toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'})}${t.time?' · '+esc(new Date('2000-01-01T'+t.time).toLocaleTimeString('en-PH',{hour:'numeric',minute:'2-digit'})):''} · ${esc(t.subject)}</div></div><span class="pill ${t.done?'low':String(t.priority).toLowerCase()}">${t.done?'Completed':esc(t.priority)}</span><label class="calendar-task-check"><input type="checkbox" ${t.done?'checked':''} onchange="toggleTask('${t.id}',${!t.done})" aria-label="Mark ${esc(t.title)} completed"></label></div>`).join(''):'<div class="empty">No tasks scheduled for this month. Add a task and it will appear here.</div>';
+  if(list)list.innerHTML=monthTasks.length?monthTasks.map(t=>`<div class="row calendar-task-row"><div class="calendar-task-dot ${t.done?'done':''}"></div><div class="calendar-task-info"><button type="button" class="task-title-button calendar-task-title ${t.done?'task-completed':''}" onclick="showTaskDetails('${t.id}')">${esc(t.title)}</button><div class="sub">${new Date(t.date+'T00:00:00').toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'})}${t.time?' · '+esc(new Date('2000-01-01T'+t.time).toLocaleTimeString('en-PH',{hour:'numeric',minute:'2-digit'})):''} · ${esc(t.subject)}</div></div><span class="pill ${t.done?'low':String(t.priority).toLowerCase()}">${t.done?'Completed':esc(t.priority)}</span><label class="calendar-task-check"><input type="checkbox" ${t.done?'checked':''} onchange="toggleTask('${t.id}',${!t.done})" aria-label="Mark ${esc(t.title)} completed"></label><button type="button" class="small-btn calendar-edit-btn" onclick="selectedTaskId='${t.id}';editCurrentTask()" aria-label="Edit ${esc(t.title)}">✎</button></div>`).join(''):'<div class="empty">No tasks scheduled for this month. Add a task and it will appear here.</div>';
 }
 function changeMonth(n){viewDate.setMonth(viewDate.getMonth()+n);renderCalendar()}
 function categorySpent(category){return monthExpenses().filter(e=>e.cat===category).reduce((sum,e)=>sum+Number(e.amount||0),0)}
