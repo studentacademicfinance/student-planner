@@ -7,8 +7,8 @@
   "start_url": "/student-planner/",
   "scope": "/student-planner/",
   "display": "standalone",
-  "background_color": "#f5f7fb",
-  "theme_color": "#635bff",
+  "background_color": "#f5f8fd",
+  "theme_color": "#3478f6",
   "icons": [
     {
       "src": "/student-planner/icon.svg",
