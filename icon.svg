@@ -2,40 +2,77 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#8b5cf6"/>
-      <stop offset="100%" stop-color="#4f46e5"/>
+      <stop offset="0%" stop-color="#168BFF"/>
+      <stop offset="55%" stop-color="#0875F5"/>
+      <stop offset="100%" stop-color="#20D8D0"/>
     </linearGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#DDEEFF"/>
+    </linearGradient>
+    <linearGradient id="mint" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#19D3B0"/>
+      <stop offset="100%" stop-color="#8AFCC5"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="12" stdDeviation="10"
+                    flood-color="#002F83" flood-opacity=".35"/>
+    </filter>
   </defs>
 
+  <!-- Blue and cyan app background -->
   <rect width="512" height="512" rx="100" fill="url(#bg)"/>
 
-  <!-- Small SP label at the upper-left -->
-  <text x="38" y="72"
-        font-family="Arial, sans-serif"
-        font-size="42"
-        font-weight="700"
-        fill="#ffffff">SP</text>
+  <!-- Calendar rings -->
+  <g filter="url(#shadow)">
+    <rect x="165" y="82" width="38" height="88" rx="19"
+          fill="#DDF0FF" stroke="#FFFFFF" stroke-width="5"/>
+    <rect x="310" y="82" width="38" height="88" rx="19"
+          fill="#DDF0FF" stroke="#FFFFFF" stroke-width="5"/>
 
-  <!-- Planner notebook -->
-  <rect x="112" y="112" width="300" height="320" rx="28" fill="#ffffff"/>
+    <!-- Calendar page -->
+    <rect x="80" y="143" width="352" height="290" rx="30"
+          fill="url(#paper)" stroke="#FFFFFF" stroke-width="4"/>
+  </g>
 
-  <!-- Binder rings -->
-  <rect x="76" y="160" width="76" height="26" rx="13" fill="#ffffff"/>
-  <rect x="76" y="250" width="76" height="26" rx="13" fill="#ffffff"/>
-  <rect x="76" y="340" width="76" height="26" rx="13" fill="#ffffff"/>
+  <!-- Calendar grid -->
+  <g fill="#B6D5F5">
+    <rect x="113" y="178" width="54" height="48" rx="12"/>
+    <rect x="181" y="178" width="54" height="48" rx="12"/>
+    <rect x="113" y="241" width="54" height="48" rx="12"/>
+    <rect x="181" y="241" width="54" height="48" rx="12"/>
+    <rect x="113" y="304" width="54" height="48" rx="12"/>
+    <rect x="181" y="304" width="54" height="48" rx="12"/>
+  </g>
 
-  <!-- First checkbox -->
-  <rect x="158" y="158" width="54" height="54" rx="12" fill="#635bff"/>
-  <path d="M171 184 L183 196 L201 174" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-  <rect x="232" y="176" width="142" height="14" rx="7" fill="#a5a0ff"/>
+  <!-- Completed task -->
+  <rect x="181" y="241" width="54" height="48" rx="12" fill="#13C9A1"/>
+  <path d="M193 264 L204 275 L224 251"
+        fill="none" stroke="#FFFFFF" stroke-width="8"
+        stroke-linecap="round" stroke-linejoin="round"/>
 
-  <!-- Second checkbox -->
-  <rect x="158" y="248" width="54" height="54" rx="12" fill="#635bff"/>
-  <path d="M171 274 L183 286 L201 264" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-  <rect x="232" y="266" width="142" height="14" rx="7" fill="#a5a0ff"/>
+  <!-- Planner details -->
+  <g fill="#A4C8EE">
+    <rect x="255" y="183" width="140" height="15" rx="7.5"/>
+    <rect x="255" y="211" width="116" height="15" rx="7.5"/>
+    <rect x="255" y="250" width="105" height="14" rx="7"/>
+  </g>
 
-  <!-- Third checkbox -->
-  <rect x="158" y="338" width="54" height="54" rx="12" fill="#635bff"/>
-  <path d="M171 364 L183 376 L201 354" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-  <rect x="232" y="356" width="142" height="14" rx="7" fill="#a5a0ff"/>
+  <!-- Rising progress bars -->
+  <g filter="url(#shadow)" fill="url(#mint)" stroke="#C8FFE9" stroke-width="3">
+    <rect x="264" y="370" width="43" height="53" rx="13"/>
+    <rect x="322" y="341" width="43" height="82" rx="13"/>
+    <rect x="380" y="308" width="43" height="115" rx="13"/>
+  </g>
+
+  <!-- Upward progress arrow -->
+  <path d="M229 366 Q286 345 326 315 T407 251"
+        fill="none" stroke="#B9FFE9" stroke-width="19"
+        stroke-linecap="round"/>
+  <path d="M229 366 Q286 345 326 315 T407 251"
+        fill="none" stroke="url(#mint)" stroke-width="12"
+        stroke-linecap="round"/>
+  <path d="M384 250 L414 239 L410 271"
+        fill="none" stroke="#B9FFE9" stroke-width="13"
+        stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
