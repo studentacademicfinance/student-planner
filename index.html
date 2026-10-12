@@ -270,6 +270,20 @@ body.dark-mode .calendar-task-check input{accent-color:#78aaff}
 
 
 .savings-hero{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.savings-progress{height:10px;background:#edf1f6;border-radius:99px;overflow:hidden;margin:16px 0 10px}.savings-progress span{display:block;height:100%;background:linear-gradient(90deg,#3988f6,#62b3ff);border-radius:99px}.goal-purpose{display:inline-flex;background:#eef5ff;color:#356fc7;border-radius:99px;padding:6px 10px;font-size:11px;font-weight:700;margin-top:10px}.task-detail-label{font-size:11px;color:var(--muted);margin-bottom:5px}.task-detail-value{font-size:14px;font-weight:650;line-height:1.5}.task-detail-block{padding:12px 0;border-bottom:1px solid var(--line)}.task-detail-header{display:flex;align-items:center;justify-content:space-between;gap:12px}.task-title-button{border:0;background:transparent;color:var(--ink);padding:0;text-align:left;font-weight:750}.task-title-button:hover{color:var(--brand);text-decoration:underline}.report-limit-row{padding:12px 0;border-bottom:1px solid var(--line)}@media(max-width:650px){.savings-hero{grid-template-columns:1fr}}
+
+/* Savings history and responsive layout */
+#savings .savings-hero{grid-template-columns:minmax(0,1.5fr) minmax(260px,1fr);align-items:stretch}
+#savings .savings-add-button{width:100%;margin-top:20px;min-height:44px}
+#savings .savings-history-card{margin-top:16px}
+#savings .savings-history-list{display:flex;flex-direction:column}
+#savings .savings-history-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 0;border-bottom:1px solid var(--line)}
+#savings .savings-history-item:last-child{border-bottom:0}
+#savings .savings-history-item>div{min-width:0}
+#savings .savings-history-item b{overflow-wrap:anywhere}
+#savings .savings-goal-card .card-head{align-items:center}
+body.dark-mode #savings .goal-purpose{background:#1b2b48;color:#a9c9ff}
+@media(max-width:650px){#savings .savings-hero{grid-template-columns:minmax(0,1fr)}#savings .savings-history-item{align-items:flex-start}#savings .savings-history-item>.green{text-align:right;flex-shrink:0}}
+
 </style>
 <script>
 (function(){
@@ -428,10 +442,18 @@ body.dark-mode .calendar-task-check input{accent-color:#78aaff}
 <div class="card" style="margin-top:16px"><div class="card-head"><div><h3>Category Spending Limits</h3><p class="sub">Set the maximum amount for each category per month.</p></div></div><div class="category-limit-form"><div class="field"><label for="limitCategory">Category</label><select id="limitCategory"><option>Food</option><option>Transportation</option><option>School</option><option>Personal</option><option>Others</option></select></div><div class="field"><label for="limitAmount">Monthly limit (₱)</label><input id="limitAmount" type="number" min="0.01" step="0.01" placeholder="e.g. 2000"></div><button class="action" type="button" onclick="saveCategoryLimit()">Save Category Limit</button></div><div id="categoryLimitList" class="list" style="margin-top:12px"></div></div>
 </section>
 <section id="savings" class="section">
-<div class="page-title"><div><h1>My Savings</h1><p>Track your savings goals separately from your monthly budget.</p></div><button class="action" onclick="openModal('savings')">Edit Savings Goal</button></div>
-<div class="savings-hero"><div class="card"><div class="stat-label">Savings Goal</div><h2 id="savingsGoalName" style="margin:10px 0 5px;font-size:20px">My Savings Goal</h2><div class="sub" id="savingsGoalTarget">Target: ₱0.00</div><div id="savingsPurpose" class="goal-purpose">Purpose not set</div><div class="savings-progress"><span id="savingsProgressBar" style="width:0%"></span></div><div class="row"><b id="savingsCurrent">₱0.00 / ₱0.00</b><b id="savingsPercent">0%</b></div><p class="sub" id="savingsDueDate">No target date set</p></div>
-<div class="card"><div class="card-head"><h3>Savings Summary</h3></div><div class="stat-label">Amount Saved</div><div class="stat-value green" id="savingsSavedSummary">₱0.00</div><div class="stat-label" style="margin-top:18px">Still Needed</div><div class="stat-value" id="savingsNeeded">₱0.00</div><button class="action" style="width:100%;margin-top:14px" onclick="openModal('savings')">Update Savings</button></div></div>
-<div class="card" style="margin-top:16px"><div class="card-head"><h3>Recent Savings</h3></div><div class="empty">Your saved amount is shown above. A dated savings history can be added separately.</div></div>
+  <div class="page-title"><div><h1>My Savings</h1><p>Track your savings goals and every deposit you make.</p></div></div>
+  <div class="savings-hero">
+    <div class="card savings-goal-card">
+      <div class="card-head"><div class="stat-label">Savings Goal</div><button class="small-btn" type="button" onclick="openModal('savings')" aria-label="Edit savings goal" title="Edit Savings Goal">✎</button></div>
+      <h2 id="savingsGoalName" style="margin:10px 0 5px;font-size:20px">My Savings Goal</h2>
+      <div class="sub" id="savingsGoalTarget">Target: ₱0.00</div><div id="savingsPurpose" class="goal-purpose">Purpose not set</div>
+      <div class="savings-progress"><span id="savingsProgressBar" style="width:0%"></span></div>
+      <div class="row"><b id="savingsCurrent">₱0.00 / ₱0.00</b><b id="savingsPercent">0%</b></div><p class="sub" id="savingsDueDate">No target date set</p>
+    </div>
+    <div class="card savings-summary-card"><div class="card-head"><h3>Savings Summary</h3></div><div class="stat-label">Amount Saved</div><div class="stat-value green" id="savingsSavedSummary">₱0.00</div><div class="stat-label" style="margin-top:18px">Still Needed</div><div class="stat-value" id="savingsNeeded">₱0.00</div><button class="action savings-add-button" type="button" onclick="openModal('addSavings')">+ Add Savings</button></div>
+  </div>
+  <div class="card savings-history-card"><div class="card-head"><h3>Recent Savings</h3></div><div id="savingsHistoryList" class="savings-history-list"><p class="sub">Loading savings history...</p></div></div>
 </section>
 <section id="taskDetail" class="section"><div class="page-title"><div><button class="small-btn" onclick="go('tasks')">← Back to Tasks</button><h1 style="margin-top:14px">Task Details</h1></div><button class="small-btn" onclick="editCurrentTask()">✎ Edit</button></div><div class="card"><div class="task-detail-header"><h2 id="detailTaskTitle" style="margin:0 0 8px;font-size:21px">Task title</h2><span id="detailTaskStatus" class="pill medium">Pending</span></div><div class="task-detail-block"><div class="task-detail-label">Date</div><div class="task-detail-value" id="detailTaskDate">—</div></div><div class="task-detail-block"><div class="task-detail-label">Time</div><div class="task-detail-value" id="detailTaskTime">—</div></div><div class="task-detail-block"><div class="task-detail-label">Subject</div><div class="task-detail-value" id="detailTaskSubject">—</div></div><div class="task-detail-block"><div class="task-detail-label">Priority</div><div class="task-detail-value" id="detailTaskPriority">—</div></div><div class="task-detail-block"><div class="task-detail-label">Description</div><div class="task-detail-value" id="detailTaskDescription">No description provided.</div></div><button class="action" id="completeTaskButton" style="width:100%;margin-top:20px;background:#42b883" onclick="completeCurrentTask()">Mark as Completed</button></div></section>
 <section id="modules" class="section">
@@ -567,6 +589,7 @@ body.dark-mode .calendar-task-check input{accent-color:#78aaff}
 <div class="field"><label>Priority</label><select id="tPriority"><option>High</option><option selected>Medium</option><option>Low</option></select></div>
 </div>
 <div id="savingsForm" class="hidden"><div class="field"><label>Savings Goal Name</label><input id="sGoalName" maxlength="100" placeholder="e.g. New Laptop"></div><div class="field"><label>Purpose</label><input id="sPurpose" maxlength="250" placeholder="e.g. School expenses"></div><div class="field"><label>Target Amount (₱)</label><input id="sGoalTarget" type="number" min="0" step="0.01"></div><div class="field"><label>Current Savings (₱)</label><input id="sGoalCurrent" type="number" min="0" step="0.01"></div><div class="field"><label>Target Date</label><input id="sGoalDate" type="date"></div></div>
+<div id="addSavingsForm" class="hidden"><p class="sub" style="margin-bottom:14px">Record money you have set aside for your savings goal.</p><div class="field"><label for="depositAmount">Amount Saved (₱)</label><input id="depositAmount" type="number" min="0.01" step="0.01" placeholder="e.g. 100"></div><div class="field"><label for="depositDate">Date Saved</label><input id="depositDate" type="date"></div></div>
 <div id="budgetForm" class="hidden">
 <div class="field"><label>Monthly budget</label><input id="mBudget" type="number" min="0" placeholder="1500"></div>
 
@@ -616,7 +639,7 @@ let currentUser = null;
 let profile = null;
 let selectedTaskId = null;
 let editingTaskId = null;
-let cache = {budget:null, goal:null, saved:null, targetDate:null, expenses:[], tasks:[], categoryLimits:[]};let viewDate = new Date();
+let cache = {budget:null, goal:null, saved:null, targetDate:null, expenses:[], tasks:[], categoryLimits:[], savingsTransactions:[]};let viewDate = new Date();
 const money=n=>'₱'+Number(n||0).toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2});
 const todayISO=()=>new Date().toISOString().slice(0,10);
 function toast(m){let t=document.getElementById('toast');t.textContent=m;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),2200)}
@@ -663,18 +686,21 @@ async function startApp(user){
 }
 async function loadAll(){
   const uid=currentUser.id;
-  const [b,g,e,t,limits]=await Promise.all([
+  const [b,g,e,t,limits,st]=await Promise.all([
     sb.from('budgets').select('*').eq('user_id',uid).eq('month',monthKey()).maybeSingle(),
     sb.from('savings_goals').select('*').eq('user_id',uid).maybeSingle(),
     sb.from('expenses').select('*').eq('user_id',uid).order('expense_date',{ascending:false}),
     sb.from('academic_tasks').select('*').eq('user_id',uid).order('due_date',{ascending:true}),
-    sb.from('category_budgets').select('*').eq('user_id',uid).eq('month',monthKey())
+    sb.from('category_budgets').select('*').eq('user_id',uid).eq('month',monthKey()),
+    sb.from('savings_transactions').select('*').eq('user_id',uid).order('savings_date',{ascending:false}).order('created_at',{ascending:false})
   ]);
   if(b.error) console.warn('budgets:',b.error.message);
   if(g.error) console.warn('savings_goals:',g.error.message);
   if(e.error) console.warn('expenses:',e.error.message);
   if(t.error) console.warn('academic_tasks:',t.error.message);
   if(limits.error) console.warn('category_budgets:',limits.error.message);
+  if(st.error) console.warn('savings_transactions:',st.error.message);
+  cache.savingsTransactions=st.data||[];
   cache.categoryLimits=(limits.data||[]).map(x=>({id:x.id,category:x.category,limit:Number(x.limit_amount||0)}));
   cache.budget=b.data?.amount??0;
 cache.goal=g.data?.target_amount??0;
@@ -741,7 +767,7 @@ function monthExpenses(){
   );
 }
 
-function renderAll(){renderDashboard();renderExpenses();renderTasks();renderCalendar();renderBudget();renderFinance();renderAnalytics();renderCategoryLimits()}
+function renderAll(){renderDashboard();renderExpenses();renderTasks();renderCalendar();renderBudget();renderSavingsHistory();renderFinance();renderAnalytics();renderCategoryLimits()}
 
 
 function renderFinance(){
@@ -916,6 +942,16 @@ async function deleteCategoryLimit(id){
   await loadAll();toast('Category limit removed.');
 }
 
+function renderSavingsHistory(){
+  const list=document.getElementById('savingsHistoryList');
+  if(!list)return;
+  const entries=cache.savingsTransactions||[];
+  if(!entries.length){list.innerHTML='<p class="sub">No savings deposits yet. Add your first savings entry!</p>';return;}
+  list.innerHTML=entries.map(item=>{
+    const date=item.savings_date?new Date(item.savings_date+'T00:00:00').toLocaleDateString('en-PH',{month:'long',day:'numeric',year:'numeric'}):'Date not available';
+    return `<div class="savings-history-item"><div><b>${esc(date)}</b><div class="sub">Savings deposit</div></div><b class="green">+ ${money(Number(item.amount||0))}</b></div>`;
+  }).join('');
+}
 function renderBudget(){
  const spent=monthExpenses().reduce((a,e)=>a+e.amount,0),p=cache.budget?Math.min(100,spent/cache.budget*100):0;
  bBudget.textContent=money(cache.budget);bSpent.textContent=money(spent);bRemain.textContent=money(Number(cache.budget||0)-spent);
@@ -932,15 +968,37 @@ function openModal(type){
   taskForm.classList.toggle('hidden',type!=='task');
   budgetForm.classList.toggle('hidden',type!=='budget');
   savingsForm.classList.toggle('hidden',type!=='savings');
-  modalTitle.textContent=type==='expense'?'Add Expense':type==='task'?(editingTaskId?'Edit Academic Task':'Add Academic Task'):type==='savings'?'Savings Goal':'My Budget';
+  const addSavingsForm=document.getElementById('addSavingsForm');
+  if(addSavingsForm)addSavingsForm.classList.toggle('hidden',type!=='addSavings');
+  modalTitle.textContent=type==='expense'?'Add Expense':type==='task'?(editingTaskId?'Edit Academic Task':'Add Academic Task'):type==='savings'?'Edit Savings Goal':type==='addSavings'?'Add Savings':'My Budget';
   eDate.value=todayISO();if(!editingTaskId)tDate.value=todayISO();if(document.getElementById('tTime')&&!editingTaskId)tTime.value='';
   if(type==='budget')mBudget.value=cache.budget||0;
   if(type==='savings'){sGoalName.value=cache.goalName||'My Savings Goal';sPurpose.value=cache.purpose||'';sGoalTarget.value=cache.goal||0;sGoalCurrent.value=cache.saved||0;sGoalDate.value=cache.targetDate||'';}
+  if(type==='addSavings'){document.getElementById('depositAmount').value='';document.getElementById('depositDate').value=todayISO();}
   if(type==='task'&&editingTaskId){const t=cache.tasks.find(x=>String(x.id)===String(editingTaskId));if(t){tTitle.value=t.title;tSubject.value=t.subject;tDate.value=t.date;tTime.value=t.time||'';tPriority.value=t.priority||'Medium';}}
 }
 function closeModal(){modal.classList.add('hidden');editingTaskId=null;}
 async function saveModal(){
   if(!currentUser)return;
+  const addSavingsForm=document.getElementById('addSavingsForm');
+  if(addSavingsForm&&!addSavingsForm.classList.contains('hidden')){
+    const amount=Number(document.getElementById('depositAmount').value);
+    const date=document.getElementById('depositDate').value;
+    if(!Number.isFinite(amount)||amount<=0)return toast('Enter a savings amount greater than zero.');
+    if(!date)return toast('Please select the date you saved the money.');
+    const {data:goal,error:goalError}=await sb.from('savings_goals').select('id,current_amount').eq('user_id',currentUser.id).maybeSingle();
+    if(goalError)return toast(goalError.message);
+    if(!goal)return toast('Please create a savings goal first using the pencil button.');
+    const oldTotal=Number(goal.current_amount||0);
+    const {error:insertError}=await sb.from('savings_transactions').insert({user_id:currentUser.id,amount,savings_date:date});
+    if(insertError)return toast('Could not save savings history: '+insertError.message);
+    const {error:updateError}=await sb.from('savings_goals').update({current_amount:oldTotal+amount}).eq('id',goal.id).eq('user_id',currentUser.id);
+    if(updateError){
+      console.error('Savings total update failed:',updateError);
+      return toast('History saved but total update failed. Please check your savings records.');
+    }
+    closeModal();await loadAll();return toast('Savings deposit added successfully!');
+  }
   if(!expenseForm.classList.contains('hidden')){
     let amount=Number(eAmount.value),desc=eDesc.value.trim();if(!amount||amount<0)return toast('Enter a valid amount.');
     const category=eCat.value,limit=cache.categoryLimits.find(x=>x.category===category);
