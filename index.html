@@ -161,6 +161,16 @@ body{background:var(--bg);font-size:13px}
 }
 
 
+/* Collapsible category limit form and circular add action */
+.category-limits-heading{align-items:center}
+.add-category-limit-btn{width:42px;height:42px;flex:0 0 42px;border:0;border-radius:50%;background:#3478f6;color:#fff;font-size:30px;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(52,120,246,.25)}
+.add-category-limit-btn:active{transform:scale(.96)}
+.category-limit-form-wrap{padding:14px 0 4px;margin-top:10px;border-top:1px solid var(--line)}
+.category-limit-form-actions{display:flex;gap:8px;align-items:center}
+.category-limit-form-actions button{min-height:42px}
+.category-limit-edit-btn{color:#3478f6}
+@media(max-width:650px){.category-limit-form-actions{display:grid;grid-template-columns:1fr 1fr}.category-limit-form-actions button{width:100%}}
+
 /* Category limits and calendar task list */
 .category-limit-form{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end}
 .category-limit-form .field{margin:0}
@@ -315,6 +325,19 @@ body.dark-mode #savings .goal-purpose{background:#1b2b48;color:#a9c9ff}
  .task-details-box{padding:16px;max-height:85vh}
 }
 
+
+/* Back navigation for every module, usable on desktop and mobile */
+.page-title{position:relative}
+.page-title.has-module-back{padding-left:48px;min-height:40px}
+.module-back-btn{position:absolute;left:0;top:0;width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--border,#dbe3ee);border-radius:11px;background:var(--card,#fff);color:var(--text,#172033);font-size:24px;line-height:1;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.module-back-btn:active{transform:scale(.96)}
+body.dark-mode .module-back-btn{color:#ffffff;background:#17243a;border-color:#34445e}
+body.dark-mode .module-back-btn:hover{background:#223451;border-color:#526b91}
+html.theme-dark-start .module-back-btn{color:#ffffff;background:#17243a;border-color:#34445e}
+@media(max-width:650px){.page-title.has-module-back{padding-left:42px}.module-back-btn{width:34px;height:34px;border-radius:10px;font-size:22px}}
+
+.period-dropdown{width:auto;min-width:130px;max-width:160px;padding:8px 30px 8px 12px;border:1px solid var(--border,#dbe3ef);border-radius:10px;background:var(--card,#fff);color:var(--text,#172033);font:inherit;font-size:14px;cursor:pointer}
+@media(max-width:600px){.period-dropdown{min-width:118px;max-width:145px}.card-head:has(#expensePeriodFilter){gap:10px;align-items:center}}
 </style>
 <script>
 (function(){
@@ -323,7 +346,7 @@ body.dark-mode #savings .goal-purpose{background:#1b2b48;color:#a9c9ff}
 })();
 </script>
 <style>html.theme-dark-start body{background:#0b1220;color:#e8eef8}
-.budget-period-card{margin:14px 0}.budget-period-options{display:flex;gap:10px;flex-wrap:wrap}.budget-period-btn{border:1px solid var(--border,#dbe2ea);border-radius:12px;padding:10px 18px;background:var(--card,#fff);color:inherit;font-weight:700;cursor:pointer}.budget-period-btn.active{background:#3478f6;color:#fff;border-color:#3478f6}.savings-entry-actions{display:flex;gap:6px;flex-wrap:wrap}.savings-history-item{gap:10px;flex-wrap:wrap}.savings-entry-actions .small-btn{padding:6px 10px}@media(max-width:600px){.budget-period-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.budget-period-btn{padding:10px 6px;font-size:13px}.savings-history-item{align-items:flex-start}.savings-entry-actions{width:100%;justify-content:flex-end}}
+.budget-period-card{margin:14px 0}.budget-period-select{width:auto;min-width:145px;max-width:100%;padding:10px 38px 10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--text);font:inherit;font-weight:700;cursor:pointer}.budget-period-select:focus{outline:2px solid #3478f6;outline-offset:2px}.budget-period-options{display:flex;gap:10px;flex-wrap:wrap}.budget-period-btn{border:1px solid var(--border,#dbe2ea);border-radius:12px;padding:10px 18px;background:var(--card,#fff);color:inherit;font-weight:700;cursor:pointer}.budget-period-btn.active{background:#3478f6;color:#fff;border-color:#3478f6}.savings-entry-actions{display:flex;gap:6px;flex-wrap:wrap}.savings-history-item{gap:10px;flex-wrap:wrap}.savings-entry-actions .small-btn{padding:6px 10px}@media(max-width:600px){.budget-period-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.budget-period-btn{padding:10px 6px;font-size:13px}.savings-history-item{align-items:flex-start}.savings-entry-actions{width:100%;justify-content:flex-end}}
 </style>
 
 </head>
@@ -449,7 +472,13 @@ body.dark-mode #savings .goal-purpose{background:#1b2b48;color:#a9c9ff}
 
 <section id="expenses" class="section">
 <div class="page-title"><div><h1>Expenses</h1><p>Record and monitor your daily spending.</p></div><button class="action" onclick="openModal('expense')">+ Add Expense</button></div>
-<div class="card"><div class="toolbar"><input id="expenseSearch" oninput="renderExpenses()" placeholder="Search expenses..."><select id="expenseFilter" onchange="renderExpenses()"><option value="">All categories</option><option>Food</option><option>Transportation</option><option>School</option><option>Personal</option><option>Others</option></select></div><div id="expenseTable" style="overflow:auto;margin-top:16px"></div></div>
+<div class="grid three expense-summary-grid" style="margin-bottom:16px">
+  <div class="card"><div class="stat-label">Spent This Month</div><div class="stat-value red" id="expenseMonthTotal">₱0.00</div><p class="sub">Total expenses recorded this month</p></div>
+  <div class="card"><div class="stat-label">Remaining Budget</div><div class="stat-value green" id="expenseRemainingBudget">₱0.00</div><p class="sub" id="expenseRemainingHint">Budget minus spending for selected period</p></div>
+  <div class="card"><div class="stat-label">Expense Records</div><div class="stat-value" id="expenseRecordCount">0</div><p class="sub">All recorded expenses</p></div>
+</div>
+<div class="card" style="margin-bottom:16px"><div class="card-head"><h3>Spending Overview</h3><select id="expensePeriodFilter" class="period-dropdown" aria-label="Filter expense period" onchange="renderExpenses()"><option value="day">This Day</option><option value="weekly">This Week</option><option value="15days">15 Days</option><option value="monthly" selected>This Month</option></select></div><div id="expenseSpendingOverview" class="bar-wrap"><div class="empty">No expenses for this period.</div></div></div>
+<div class="card"><div class="card-head"><h3>Expense History</h3></div><div class="toolbar"><input id="expenseSearch" oninput="renderExpenses()" placeholder="Search expenses..."><select id="expenseFilter" onchange="renderExpenses()"><option value="">All categories</option><option>Food</option><option>Transportation</option><option>School</option><option>Personal</option><option>Others</option></select></div><div id="expenseTable" style="overflow:auto;margin-top:16px"></div></div>
 </section>
 
 <section id="calendar" class="section">
@@ -460,10 +489,10 @@ body.dark-mode #savings .goal-purpose{background:#1b2b48;color:#a9c9ff}
 
 <section id="budget" class="section">
 <div class="page-title"><div><h1>My Budget</h1><p>Choose a budget period and manage your spending limits.</p></div><button class="action" onclick="openModal('budget')">Edit Budget</button></div>
-<div class="card budget-period-card"><div class="card-head"><h3>Budget Period</h3><span class="sub">Choose how often your budget resets</span></div><div class="budget-period-options" role="group" aria-label="Budget period"><button type="button" class="budget-period-btn" data-period="weekly" onclick="setBudgetPeriod('weekly')">Weekly</button><button type="button" class="budget-period-btn" data-period="15days" onclick="setBudgetPeriod('15days')">15 Days</button><button type="button" class="budget-period-btn" data-period="monthly" onclick="setBudgetPeriod('monthly')">Monthly</button></div></div>
+<div class="card budget-period-card"><div class="card-head"><h3>Budget Period</h3><span class="sub">Choose how often your budget resets</span></div><select id="budgetPeriodSelect" class="budget-period-select" aria-label="Budget frequency" onchange="setBudgetPeriod(this.value)"><option value="weekly">Weekly</option><option value="15days">15 Days</option><option value="monthly">Monthly</option></select></div>
 <div class="grid three"><div class="card"><div class="stat-label">Total Budget</div><div class="stat-value" id="bBudget">₱0.00</div></div><div class="card"><div class="stat-label" id="spentPeriodLabel">Spent This Month</div><div class="stat-value red" id="bSpent">₱0.00</div></div><div class="card"><div class="stat-label">Remaining</div><div class="stat-value green" id="bRemain">₱0.00</div></div></div>
 <div class="card" style="margin-top:16px"><div class="card-head"><h3>Budget Overview</h3><span id="budgetPct" class="pill">0%</span></div><div class="progress"><span id="budgetBar" style="width:0%"></span></div><p id="budgetHint" class="sub"></p></div>
-<div class="card" style="margin-top:16px"><div class="card-head"><div><h3>Category Spending Limits</h3><p class="sub">Set the maximum amount for each category per month.</p></div></div><div class="category-limit-form"><div class="field"><label for="limitCategory">Category</label><select id="limitCategory"><option>Food</option><option>Transportation</option><option>School</option><option>Personal</option><option>Others</option></select></div><div class="field"><label for="limitAmount">Monthly limit (₱)</label><input id="limitAmount" type="number" min="0.01" step="0.01" placeholder="e.g. 2000"></div><button class="action" type="button" onclick="saveCategoryLimit()">Save Category Limit</button></div><div id="categoryLimitList" class="list" style="margin-top:12px"></div></div>
+<div class="card category-limits-card" style="margin-top:16px"><div class="card-head category-limits-heading"><div><h3>Category Spending Limits</h3><p class="sub">Set the maximum amount for each category per month.</p></div><button class="add-category-limit-btn" type="button" onclick="toggleCategoryLimitForm()" aria-label="Add category spending limit" title="Add category spending limit">+</button></div><div id="categoryLimitFormWrap" class="category-limit-form-wrap hidden"><div class="category-limit-form"><div class="field"><label for="limitCategory">Category</label><select id="limitCategory"><option>Food</option><option>Transportation</option><option>School</option><option>Personal</option><option>Others</option></select></div><div class="field"><label for="limitAmount">Monthly limit (₱)</label><input id="limitAmount" type="number" min="0.01" step="0.01" placeholder="e.g. 2000"></div><div class="category-limit-form-actions"><button class="secondary" type="button" onclick="cancelCategoryLimitForm()">Cancel</button><button class="action" id="saveCategoryLimitButton" type="button" onclick="saveCategoryLimit()">Save Limit</button></div></div></div><div id="categoryLimitList" class="list" style="margin-top:12px"></div></div>
 </section>
 <section id="savings" class="section">
   <div class="page-title"><div><h1>My Savings</h1><p>Track your savings goals and every deposit you make.</p></div></div>
@@ -618,33 +647,7 @@ body.dark-mode #savings .goal-purpose{background:#1b2b48;color:#a9c9ff}
 <div class="field"><label for="mBudget">Budget Amount (₱)</label><input id="mBudget" type="number" min="0" step="0.01" placeholder="1500"></div>
 <div class="field"><label for="mBudgetPeriod">Budget Frequency</label><select id="mBudgetPeriod"><option value="weekly">Weekly</option><option value="15days">Every 15 Days</option><option value="monthly">Monthly</option></select><small class="sub">The amount stays the same when you change frequency.</small></div>
 
-<div class="field">
-  <label>Savings Goal Name</label>
-  <input id="mGoalName"
-         type="text"
-         maxlength="100"
-         placeholder="e.g. New Phone">
-</div>
 
-<div class="field">
-  <label>Purpose of Saving</label>
-  <input id="mPurpose"
-         type="text"
-         maxlength="250"
-         placeholder="e.g. For school expenses">
-</div>
-
-<div class="field">
-  <label>Target Amount</label>
-  <input id="mGoal"
-         type="number"
-         min="0"
-         step="0.01"
-         placeholder="5000">
-</div>
-
-<div class="field"><label>Current savings</label><input id="mSaved" type="number" min="0" placeholder="0"></div>
-<div class="field"><label>Target date</label><input id="mTargetDate" type="date"></div>
 </div>
 <div class="form-actions"><button class="secondary" onclick="closeModal()">Cancel</button><button class="action" onclick="saveModal()">Save</button></div>
 </div></div>
@@ -671,6 +674,7 @@ let profile = null;
 let selectedTaskId = null;
 let editingTaskId = null;
 let cache = {budget:null, goal:null, saved:null, targetDate:null, expenses:[], tasks:[], categoryLimits:[], savingsTransactions:[]};let viewDate = new Date();
+let editingCategoryLimitId = null;
 let budgetPeriod = (()=>{try{return localStorage.getItem('studentPlannerBudgetPeriod')||'monthly'}catch(e){return 'monthly'}})();
 async function setBudgetPeriod(period){budgetPeriod=['weekly','15days','monthly'].includes(period)?period:'monthly';if(currentUser){const {error}=await sb.from('budgets').upsert({user_id:currentUser.id,month:monthKey(),amount:Number(cache.budget||0),budget_period:budgetPeriod},{onConflict:'user_id,month'});if(error)return toast('Could not save budget frequency: '+error.message)}try{localStorage.setItem('studentPlannerBudgetPeriod',budgetPeriod)}catch(e){};renderAll();toast('Budget frequency saved: '+({weekly:'Weekly','15days':'Every 15 Days',monthly:'Monthly'}[budgetPeriod])+'.')}
 function budgetRange(){const now=new Date(),start=new Date(now.getFullYear(),now.getMonth(),1),end=new Date(now.getFullYear(),now.getMonth()+1,0);if(budgetPeriod==='weekly'){const day=now.getDay();start.setDate(now.getDate()-((day+6)%7));end.setTime(start.getTime());end.setDate(start.getDate()+6)}else if(budgetPeriod==='15days'){start.setDate(now.getDate()<=15?1:16);end.setDate(now.getDate()<=15?15:new Date(now.getFullYear(),now.getMonth()+1,0).getDate())}else{start.setDate(1)};return {start:start.toISOString().slice(0,10),end:end.toISOString().slice(0,10)}}
@@ -778,11 +782,36 @@ function openModule(id){
   else go(id);
 }
 
-function go(id){
+let moduleNavigationHistory=[];
+function goBackModule(){
+  const current=document.querySelector('.section.active')?.id;
+  while(moduleNavigationHistory.length){
+    const previous=moduleNavigationHistory.pop();
+    if(previous && previous!==current && document.getElementById(previous)) return go(previous,true);
+  }
+  return go('modules',true);
+}
+function addModuleBackButtons(){
+  document.querySelectorAll('.section').forEach(section=>{
+    const title=section.querySelector('.page-title');
+    if(!title || ['dashboard','modules'].includes(section.id)) return;
+    title.classList.add('has-module-back');
+    if(title.querySelector('.module-back-btn')) return;
+    const btn=document.createElement('button');
+    btn.type='button';btn.className='module-back-btn';btn.setAttribute('aria-label','Go back');btn.setAttribute('title','Go back');btn.innerHTML='&#8592;';btn.onclick=goBackModule;
+    title.appendChild(btn);
+  });
+}
+function go(id,fromBack=false){
   if(id==='tasks'||id==='taskDetail')id='calendar';
   closeModuleDrawer();
   const target=document.getElementById(id);
   if(!target)return;
+  const current=document.querySelector('.section.active')?.id;
+  if(!fromBack && current && current!==id){
+    moduleNavigationHistory.push(current);
+    if(moduleNavigationHistory.length>30)moduleNavigationHistory.shift();
+  }
   document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
   target.classList.add('active');
   document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.section===id));
@@ -844,6 +873,8 @@ function renderAnalytics(){
 }
 function renderSpendingChart(){
   const container = document.getElementById('bars');
+  const expenseContainer = document.getElementById('expenseSpendingOverview');
+  const emptyMarkup = '<div class="empty">No expenses this month yet.</div>';
 
   const categories = [
     {name:'Food', color:'#F97316', light:'#FDBA74'},
@@ -856,8 +887,8 @@ function renderSpendingChart(){
   const expenses = monthExpenses();
 
   if(!expenses.length){
-    container.innerHTML =
-      '<div class="empty">No expenses this month yet.</div>';
+    if(container) container.innerHTML = emptyMarkup;
+    if(expenseContainer) expenseContainer.innerHTML = emptyMarkup;
     return;
   }
 
@@ -875,7 +906,7 @@ function renderSpendingChart(){
 
   const maxTotal = Math.max(...totals.map(x => x.total), 1);
 
-  container.innerHTML = totals.map(item => {
+  const chartMarkup = totals.map(item => {
     const height = item.total > 0
       ? Math.max(8, (item.total / maxTotal) * 95)
       : 4;
@@ -898,6 +929,8 @@ function renderSpendingChart(){
       </div>
     `;
   }).join('');
+  if(container) container.innerHTML = chartMarkup;
+  if(expenseContainer) expenseContainer.innerHTML = chartMarkup;
 }
 
 function renderDashboard(){
@@ -915,7 +948,57 @@ saveText.textContent=cache.goal
   : 'Set a savings goal to start tracking.';let tasks=[...cache.tasks].filter(t=>!t.done).sort((a,b)=>String(a.date).localeCompare(String(b.date))).slice(0,4);dashTasks.innerHTML=tasks.length?tasks.map(t=>`<div class="row"><div><b>${esc(t.title)}</b><div class="sub">${esc(t.subject)} · ${t.date}</div></div><span class="pill ${String(t.priority).toLowerCase()}">${esc(t.priority)}</span></div>`).join(''):'<div class="empty">No upcoming tasks.</div>';
   let recent=[...cache.expenses].sort((a,b)=>String(b.date).localeCompare(String(a.date))).slice(0,4);dashExpenses.innerHTML=recent.length?recent.map(e=>`<div class="row"><div><b>${esc(e.desc||e.cat)}</b><div class="sub">${esc(e.cat)} · ${e.date}</div></div><b class="red">-${money(e.amount)}</b></div>`).join(''):'<div class="empty">No expenses yet.</div>';
 }
-function renderExpenses(){let q=(expenseSearch?.value||'').toLowerCase(),f=expenseFilter?.value||'',arr=cache.expenses.filter(e=>(!q||String(e.desc).toLowerCase().includes(q)||String(e.cat).toLowerCase().includes(q))&&(!f||e.cat===f));expenseTable.innerHTML=arr.length?`<table class="table"><thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Amount</th><th></th></tr></thead><tbody>${arr.map(e=>`<tr><td>${e.date}</td><td>${esc(e.desc)}</td><td><span class="pill">${esc(e.cat)}</span></td><td class="red"><b>${money(e.amount)}</b></td><td><button class="small-btn" onclick="delExpense('${e.id}')">Delete</button></td></tr>`).join('')}</tbody></table>`:'<div class="empty">No matching expenses.</div>'}
+function expensePeriodRange(period){
+  const now=new Date();
+  let start=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  let end=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  if(period==='weekly'){
+    start.setDate(now.getDate()-((now.getDay()+6)%7));
+    end=new Date(start.getFullYear(),start.getMonth(),start.getDate()+6);
+  }else if(period==='15days'){
+    start=new Date(now.getFullYear(),now.getMonth(),now.getDate()<=15?1:16);
+    end=new Date(now.getFullYear(),now.getMonth(),now.getDate()<=15?15:new Date(now.getFullYear(),now.getMonth()+1,0).getDate());
+  }else if(period==='monthly'){
+    start=new Date(now.getFullYear(),now.getMonth(),1);
+    end=new Date(now.getFullYear(),now.getMonth()+1,0);
+  }
+  const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  return {start:iso(start),end:iso(end),label:period==='day'?'today':period==='weekly'?'this week':period==='15days'?'this 15-day period':'this month'};
+}
+function expensesForSelectedPeriod(){
+  const period=document.getElementById('expensePeriodFilter')?.value||'monthly';
+  const range=expensePeriodRange(period);
+  return cache.expenses.filter(e=>String(e.date||'')>=range.start&&String(e.date||'')<=range.end);
+}
+function renderExpenses(){
+  const period=document.getElementById('expensePeriodFilter')?.value||'monthly';
+  const range=expensePeriodRange(period);
+  const selectedExpenses=expensesForSelectedPeriod();
+  const spent=selectedExpenses.reduce((sum,e)=>sum+Number(e.amount||0),0);
+  const remaining=Number(cache.budget||0)-spent;
+  const setText=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value;};
+  setText('expenseMonthTotal',money(spent));
+  const spentLabel=document.querySelector('#expenses .expense-summary-grid .stat-label');if(spentLabel)spentLabel.textContent='Spent '+({day:'Today',weekly:'This Week','15days':'This 15-Day Period',monthly:'This Month'}[period]||'This Month');
+  setText('expenseRemainingBudget',money(remaining));
+  const remainingEl=document.getElementById('expenseRemainingBudget');if(remainingEl)remainingEl.className='stat-value '+(remaining<0?'red':'green');
+  setText('expenseRecordCount',String(cache.expenses.length));
+  const totals={};selectedExpenses.forEach(e=>{const cat=e.cat||'Others';totals[cat]=(totals[cat]||0)+Number(e.amount||0)});
+  const periodLabel=({day:'today',weekly:'this week','15days':'this 15-day period',monthly:'this month'}[period]||'this month');
+  const overviewTitle=document.querySelector('#expenses .card .card-head h3');if(overviewTitle)overviewTitle.textContent='Spending Overview';
+  const overviewSub=document.querySelector('#expenses #expenseSpendingOverview')?.previousElementSibling?.querySelector('.sub');if(overviewSub)overviewSub.textContent=range.label.charAt(0).toUpperCase()+range.label.slice(1);
+  const expenseRemainingHint=document.getElementById('expenseRemainingHint');if(expenseRemainingHint)expenseRemainingHint.textContent='Budget minus spending for '+periodLabel;
+  const categoryOverview=document.getElementById('expenseCategoryOverview');
+  if(categoryOverview){const cats=Object.entries(totals).sort((a,b)=>b[1]-a[1]);categoryOverview.innerHTML=cats.length?cats.map(([cat,total])=>`<div class="row"><div><b>${esc(cat)}</b><div class="sub">${money(total)} spent this month</div></div><b>${spent?Math.round(total/spent*100):0}%</b></div>`).join(''):'<div class="empty">No expenses this month.</div>';}
+
+  const overview=document.getElementById('expenseSpendingOverview');
+  if(overview){
+    const colors={Food:'#F97316',Transportation:'#0EA5E9',School:'#8B5CF6',Personal:'#EC4899',Others:'#10B981'};
+    const entries=Object.entries(totals).sort((a,b)=>b[1]-a[1]);
+    const max=Math.max(...entries.map(x=>x[1]),1);
+    overview.innerHTML=entries.length?entries.map(([cat,total])=>`<div class="bar-col" title="${esc(cat)}: ${money(total)}"><div class="bar-amount">${money(total)}</div><div class="bar" style="height:${Math.max(8,total/max*95)}px;background:${colors[cat]||colors.Others}"></div><span style="font-weight:700;color:${colors[cat]||colors.Others}">${esc(cat)}</span><small class="bar-count">${selectedExpenses.filter(e=>(e.cat||'Others')===cat).length} entries</small></div>`).join(''):'<div class="empty">No expenses for '+range.label+'.</div>';
+  }
+  let q=(expenseSearch?.value||'').toLowerCase(),f=expenseFilter?.value||'',arr=cache.expenses.filter(e=>(!q||String(e.desc).toLowerCase().includes(q)||String(e.cat).toLowerCase().includes(q))&&(!f||e.cat===f));expenseTable.innerHTML=arr.length?`<table class="table"><thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Amount</th><th></th></tr></thead><tbody>${arr.map(e=>`<tr><td>${e.date}</td><td>${esc(e.desc)}</td><td><span class="pill">${esc(e.cat)}</span></td><td class="red"><b>${money(e.amount)}</b></td><td><button class="small-btn" onclick="delExpense('${e.id}')">Delete</button></td></tr>`).join('')}</tbody></table>`:'<div class="empty">No matching expenses.</div>';
+}
 async function delExpense(id){const {error}=await sb.from('expenses').delete().eq('id',id).eq('user_id',currentUser.id);if(error)return toast(error.message);await loadAll();toast('Expense deleted.')}
 function showTaskDetails(id){
  const task=cache.tasks.find(t=>String(t.id)===String(id));if(!task)return toast('Task not found.');selectedTaskId=task.id;
@@ -970,22 +1053,48 @@ function changeMonth(n){viewDate.setMonth(viewDate.getMonth()+n);renderCalendar(
 function categorySpent(category){return monthExpenses().filter(e=>e.cat===category).reduce((sum,e)=>sum+Number(e.amount||0),0)}
 function renderCategoryLimits(){
   const box=document.getElementById('categoryLimitList');if(!box)return;
-  if(!cache.categoryLimits.length){box.innerHTML='<div class="empty">No category limits yet. Choose a category and set your monthly maximum above.</div>';return;}
+  if(!cache.categoryLimits.length){box.innerHTML='<div class="empty">No category limits yet. Tap the + button to add your first category limit.</div>';return;}
   box.innerHTML=cache.categoryLimits.map(item=>{
     const spent=categorySpent(item.category),remaining=Math.max(0,item.limit-spent),pct=item.limit?Math.min(100,spent/item.limit*100):0,over=spent>item.limit;
-    return `<div class="category-limit-item"><div class="category-limit-top"><div><b>${esc(item.category)}</b><div class="sub">${money(spent)} spent of ${money(item.limit)}</div></div><div class="category-limit-right"><b class="${over?'red':'green'}">${over?'Over limit by '+money(spent-item.limit):money(remaining)+' left'}</b><button class="small-btn" onclick="deleteCategoryLimit('${item.id}')">Remove</button></div></div><div class="progress"><span class="${over?'limit-over':''}" style="width:${pct}%"></span></div></div>`;
+    return `<div class="category-limit-item"><div class="category-limit-top"><div><b>${esc(item.category)}</b><div class="sub">${money(spent)} spent of ${money(item.limit)}</div></div><div class="category-limit-right"><b class="${over?'red':'green'}">${over?'Over limit by '+money(spent-item.limit):money(remaining)+' left'}</b><button class="small-btn category-limit-edit-btn" onclick="editCategoryLimit('${item.id}')">Edit</button><button class="small-btn" onclick="deleteCategoryLimit('${item.id}')">Remove</button></div></div><div class="progress"><span class="${over?'limit-over':''}" style="width:${pct}%"></span></div></div>`;
   }).join('');
+}
+function toggleCategoryLimitForm(){
+  const wrap=document.getElementById('categoryLimitFormWrap');
+  if(!wrap)return;
+  const opening=wrap.classList.contains('hidden');
+  if(opening){editingCategoryLimitId=null;document.getElementById('limitCategory').disabled=false;document.getElementById('limitAmount').value='';document.getElementById('saveCategoryLimitButton').textContent='Save Limit';wrap.classList.remove('hidden');}
+  else cancelCategoryLimitForm();
+}
+function cancelCategoryLimitForm(){
+  const wrap=document.getElementById('categoryLimitFormWrap');if(wrap)wrap.classList.add('hidden');
+  editingCategoryLimitId=null;
+  const category=document.getElementById('limitCategory'),amount=document.getElementById('limitAmount'),button=document.getElementById('saveCategoryLimitButton');
+  if(category)category.disabled=false;if(amount)amount.value='';if(button)button.textContent='Save Limit';
+}
+function editCategoryLimit(id){
+  const item=cache.categoryLimits.find(x=>String(x.id)===String(id));if(!item)return toast('Category limit not found.');
+  editingCategoryLimitId=item.id;
+  document.getElementById('limitCategory').value=item.category;document.getElementById('limitCategory').disabled=true;
+  document.getElementById('limitAmount').value=item.limit;document.getElementById('saveCategoryLimitButton').textContent='Update Limit';
+  document.getElementById('categoryLimitFormWrap').classList.remove('hidden');
+  document.getElementById('categoryLimitFormWrap').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 async function saveCategoryLimit(){
   if(!currentUser)return toast('Please sign in first.');
   const category=document.getElementById('limitCategory').value;
   const limit=Number(document.getElementById('limitAmount').value);
   if(!Number.isFinite(limit)||limit<=0)return toast('Enter a limit greater than zero.');
-  const {error}=await sb.from('category_budgets').upsert({user_id:currentUser.id,month:monthKey(),category,limit_amount:limit},{onConflict:'user_id,month,category'});
-  if(error){console.error('Category limit save failed:',error);return toast('Could not save category limit. Check the SQL setup.');}
-  document.getElementById('limitAmount').value='';
-  await loadAll();toast(`${category} limit saved.`);
+  let result;
+  if(editingCategoryLimitId!==null){
+    result=await sb.from('category_budgets').update({limit_amount:limit}).eq('id',editingCategoryLimitId).eq('user_id',currentUser.id);
+  }else{
+    result=await sb.from('category_budgets').upsert({user_id:currentUser.id,month:monthKey(),category,limit_amount:limit},{onConflict:'user_id,month,category'});
+  }
+  if(result.error){console.error('Category limit save failed:',result.error);return toast('Could not save category limit. Check the SQL setup.');}
+  const wasEditing=editingCategoryLimitId!==null;cancelCategoryLimitForm();await loadAll();toast(`${category} limit ${wasEditing?'updated':'saved'}.`);
 }
+
 async function deleteCategoryLimit(id){
   const {error}=await sb.from('category_budgets').delete().eq('id',id).eq('user_id',currentUser.id);
   if(error)return toast(error.message);
@@ -1007,7 +1116,7 @@ function editSavingsTransaction(id){const item=(cache.savingsTransactions||[]).f
 async function deleteSavingsTransaction(id){const item=(cache.savingsTransactions||[]).find(x=>String(x.id)===String(id));if(!item)return toast('Savings entry not found.');if(!confirm('Remove this savings entry? The saved total will be adjusted too.'))return;const {error}=await sb.from('savings_transactions').delete().eq('id',id).eq('user_id',currentUser.id);if(error)return toast('Could not remove savings entry: '+error.message);const {data:goal,error:ge}=await sb.from('savings_goals').select('id,current_amount').eq('user_id',currentUser.id).maybeSingle();if(ge)return toast('Entry removed, but could not refresh savings total: '+ge.message);if(goal){const next=Math.max(0,Number(goal.current_amount||0)-Number(item.amount||0));const {error:ue}=await sb.from('savings_goals').update({current_amount:next}).eq('id',goal.id).eq('user_id',currentUser.id);if(ue)return toast('Entry removed, but savings total update failed: '+ue.message)}await loadAll();toast('Savings entry removed.');}
 
 function renderBudget(){
- document.querySelectorAll('.budget-period-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.period===budgetPeriod));
+ const periodSelect=document.getElementById('budgetPeriodSelect');if(periodSelect)periodSelect.value=budgetPeriod;
  const periodName=({weekly:'Weekly','15days':'15-day',monthly:'Monthly'}[budgetPeriod]||'Monthly');
  
  const spent=periodExpenses().reduce((a,e)=>a+e.amount,0),p=cache.budget?Math.min(100,spent/cache.budget*100):0;
@@ -1280,5 +1389,7 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
+
+<script>document.addEventListener('DOMContentLoaded',addModuleBackButtons);if(document.readyState!=='loading')addModuleBackButtons();</script>
 </body>
 </html>
