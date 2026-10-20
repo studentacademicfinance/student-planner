@@ -789,8 +789,7 @@ cache.goalName=g.data?.name||'My Savings Goal';
 cache.purpose=g.data?.purpose||'';
 cache.targetDate=g.data?.["target date"]??null;
   cache.expenses=(e.data||[]).map(x=>({id:x.id,amount:Number(x.amount||0),cat:x.category,desc:x.description||x.category,date:x.expense_date}));
-  cache.tasks=(t.data||[]).map(x=>({id:x.id,title:x.title,subject:x.subject||'General',date:x.due_date,time:x.due_time||'',priority:x.priority||'Medium',done:!!x.completed}));
-  renderAll();
+cache.tasks=(t.data||[]).map(x=>({id:x.id,title:x.title,subject:x.subject||'General',date:String(x.due_date||'').slice(0,10),time:x.due_time||'',priority:x.priority||'Medium',done:!!x.completed}));  renderAll();
 }
 function toggleModuleDrawer(){
   const drawer=document.getElementById('moduleDrawer');
