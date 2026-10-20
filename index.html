@@ -699,7 +699,15 @@ async function setBudgetPeriod(period){budgetPeriod=['weekly','15days','monthly'
 function budgetRange(){const now=new Date(),start=new Date(now.getFullYear(),now.getMonth(),1),end=new Date(now.getFullYear(),now.getMonth()+1,0);if(budgetPeriod==='weekly'){const day=now.getDay();start.setDate(now.getDate()-((day+6)%7));end.setTime(start.getTime());end.setDate(start.getDate()+6)}else if(budgetPeriod==='15days'){start.setDate(now.getDate()<=15?1:16);end.setDate(now.getDate()<=15?15:new Date(now.getFullYear(),now.getMonth()+1,0).getDate())}else{start.setDate(1)};return {start:start.toISOString().slice(0,10),end:end.toISOString().slice(0,10)}}
 function periodExpenses(){const r=budgetRange();return cache.expenses.filter(e=>e.date>=r.start&&e.date<=r.end)}
 const money=n=>'₱'+Number(n||0).toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2});
-const todayISO=()=>new Date().toISOString().slice(0,10);
+function localDateISO(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
+const todayISO = () => localDateISO(new Date());
 function toast(m){let t=document.getElementById('toast');t.textContent=m;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),2200)}
 function showRegister() {
   const login = document.getElementById('loginBox');
@@ -1065,9 +1073,17 @@ function renderCalendar(){
   let cells='';
   for(let i=0;i<42;i++){
     let n=i-start+1,day=n,muted=false,iso;
-    if(n<1){day=prev+n;muted=true;iso=new Date(y,m-1,day).toISOString().slice(0,10)}
-    else if(n>total){day=n-total;muted=true;iso=new Date(y,m+1,day).toISOString().slice(0,10)}
-    else{iso=new Date(y,m,day).toISOString().slice(0,10)}
+   if (n < 1) {
+  day = prev + n;
+  muted = true;
+  iso = localDateISO(new Date(y, m - 1, day));
+} else if (n > total) {
+  day = n - total;
+  muted = true;
+  iso = localDateISO(new Date(y, m + 1, day));
+} else {
+  iso = localDateISO(new Date(y, m, day));
+}
     let events=cache.tasks.filter(t=>t.date===iso);
     const isToday=iso===todayISO();
     cells+=`<div class="cal-cell ${muted?'muted':''} ${isToday?'is-today':''}"><div class="date-num">${day}</div>${events.slice(0,2).map(e=>`<button type="button" class="event ${e.done?'event-done':''}" onclick="showTaskDetails('${e.id}')" title="Open task: ${esc(e.title)}" aria-label="Open task ${esc(e.title)}">${e.time?esc(e.time)+' ':''}${esc(e.title)}</button>`).join('')}${events.length>2?`<button type="button" class="more-events sub" onclick="document.getElementById('calendarTaskList').scrollIntoView({behavior:'smooth',block:'start'})">+${events.length-2} more</button>`:''}</div>`;
